@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Departamento
+public partial class DepartamentoModel
 {
     public string DepId { get; set; } = null!;
 
@@ -11,5 +11,5 @@ public partial class Departamento
 
     public string DepEstado { get; set; } = null!;
 
-    public virtual ICollection<Municipio> Municipios { get; set; } = new List<Municipio>();
+    public virtual ICollection<MunicipioModel> Municipios { get; set; } = new List<MunicipioModel>();
 }

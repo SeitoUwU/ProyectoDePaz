@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Permiso
+public partial class PermisoModel
 {
     public string PermId { get; set; } = null!;
 
     public string PermPermiso { get; set; } = null!;
 
-    public virtual ICollection<RolTienePermiso> RolTienePermisos { get; set; } = new List<RolTienePermiso>();
+    public virtual ICollection<RolTienePermisoModel> RolTienePermisos { get; set; } = new List<RolTienePermisoModel>();
 }

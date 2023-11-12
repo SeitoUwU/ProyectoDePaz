@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Tipodocumento
+public partial class TipodocumentoModel
 {
     public string TipdocId { get; set; } = null!;
 
     public string TipdocTipo { get; set; } = null!;
 
-    public virtual ICollection<Documento> Documentos { get; set; } = new List<Documento>();
+    public virtual ICollection<DocumentoModel> Documentos { get; set; } = new List<DocumentoModel>();
 }

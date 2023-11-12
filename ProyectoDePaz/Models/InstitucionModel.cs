@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Institucion
+public partial class InstitucionModel
 {
     public string InsId { get; set; } = null!;
 
@@ -11,7 +11,7 @@ public partial class Institucion
 
     public string FkmunId { get; set; } = null!;
 
-    public virtual Municipio Fkmun { get; set; } = null!;
+    public virtual MunicipioModel Fkmun { get; set; } = null!;
 
-    public virtual ICollection<Persona> Personas { get; set; } = new List<Persona>();
+    public virtual ICollection<PersonaModel> Personas { get; set; } = new List<PersonaModel>();
 }

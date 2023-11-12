@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Persona
+public partial class PersonaModel
 {
     public string PerId { get; set; } = null!;
 
@@ -27,13 +27,13 @@ public partial class Persona
 
     public string FkinsId { get; set; } = null!;
 
-    public virtual ICollection<Documento> Documentos { get; set; } = new List<Documento>();
+    public virtual ICollection<DocumentoModel> Documentos { get; set; } = new List<DocumentoModel>();
 
-    public virtual Generopersona Fkgen { get; set; } = null!;
+    public virtual GeneropersonaModel Fkgen { get; set; } = null!;
 
-    public virtual Institucion Fkins { get; set; } = null!;
+    public virtual InstitucionModel Fkins { get; set; } = null!;
 
-    public virtual Tipopersona Fktiper { get; set; } = null!;
+    public virtual TipopersonaModel Fktiper { get; set; } = null!;
 
-    public virtual Usuario FkusuCorreoNavigation { get; set; } = null!;
+    public virtual UsuarioModel FkusuCorreoNavigation { get; set; } = null!;
 }

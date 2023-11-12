@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Documento
+public partial class DocumentoModel
 {
     public string DocId { get; set; } = null!;
 
@@ -21,13 +21,13 @@ public partial class Documento
 
     public string FktipdocId { get; set; } = null!;
 
-    public virtual ICollection<Doctieneetq> Doctieneetqs { get; set; } = new List<Doctieneetq>();
+    public virtual ICollection<DoctieneetqModel> Doctieneetqs { get; set; } = new List<DoctieneetqModel>();
 
-    public virtual Municipio Fkmun { get; set; } = null!;
+    public virtual MunicipioModel Fkmun { get; set; } = null!;
 
-    public virtual Persona Fkper { get; set; } = null!;
+    public virtual PersonaModel Fkper { get; set; } = null!;
 
-    public virtual Tipodocumento Fktipdoc { get; set; } = null!;
+    public virtual TipodocumentoModel Fktipdoc { get; set; } = null!;
 
-    public virtual ICollection<Publicacion> Publicacions { get; set; } = new List<Publicacion>();
+    public virtual ICollection<PublicacionModel> Publicacions { get; set; } = new List<PublicacionModel>();
 }

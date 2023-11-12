@@ -1,0 +1,58 @@
+﻿@model ProyectoDePaz.Models.ContenedorModel
+@{
+}
+<div class="container py-5">
+    <div class="row mb-4 mb-lg-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <p class="fw-bold text-success mb-2">Registro</p>
+            <h2 class="fw-bold">Bienvenido</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col">
+            <div class="card" style="background: rgba(255, 255, 255, 0.66);color: var(--bs-emphasis-color);backdrop-filter: blur(7px);">
+                <div class="card-body">
+                    <div>
+                        <form>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"><input type="text" asp-for="persona.PerNombreUno" placeholder="Primer nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="text" placeholder="Primer apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="tel" placeholder="Numero telefonico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /></div>
+                                        <div class="col">
+                                            <input type="text" placeholder="Segundo nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="text" placeholder="Segundo apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <div>
+                                                <code style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">Ingrese la fecha de nacimiento</code>
+                                                <div><input type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione tipo persona</option>
+                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
+                                                <option class="d-none" selected>Seleccione genero</option>
+                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione institucion</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione el departamento</option>
+                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione el municipio</option>
+                                            </select><input type="email" placeholder="Correo electronico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="password" placeholder="Contrasenia" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px;"><button class="btn btn-primary" type="button" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">Registrar</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

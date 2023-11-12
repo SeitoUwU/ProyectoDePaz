@@ -15,35 +15,35 @@ public partial class BdContext : DbContext
     {
     }
 
-    public virtual DbSet<Departamento> Departamentos { get; set; }
+    public virtual DbSet<DepartamentoModel> Departamentos { get; set; }
 
-    public virtual DbSet<Doctieneetq> Doctieneetqs { get; set; }
+    public virtual DbSet<DoctieneetqModel> Doctieneetqs { get; set; }
 
-    public virtual DbSet<Documento> Documentos { get; set; }
+    public virtual DbSet<DocumentoModel> Documentos { get; set; }
 
-    public virtual DbSet<Etiqueta> Etiqueta { get; set; }
+    public virtual DbSet<EtiquetaModel> Etiqueta { get; set; }
 
-    public virtual DbSet<Generopersona> Generopersonas { get; set; }
+    public virtual DbSet<GeneropersonaModel> Generopersonas { get; set; }
 
-    public virtual DbSet<Institucion> Institucions { get; set; }
+    public virtual DbSet<InstitucionModel> Institucions { get; set; }
 
-    public virtual DbSet<Municipio> Municipios { get; set; }
+    public virtual DbSet<MunicipioModel> Municipios { get; set; }
 
-    public virtual DbSet<Permiso> Permisos { get; set; }
+    public virtual DbSet<PermisoModel> Permisos { get; set; }
 
-    public virtual DbSet<Persona> Personas { get; set; }
+    public virtual DbSet<PersonaModel> Personas { get; set; }
 
-    public virtual DbSet<Publicacion> Publicacions { get; set; }
+    public virtual DbSet<PublicacionModel> Publicacions { get; set; }
 
-    public virtual DbSet<Rol> Rols { get; set; }
+    public virtual DbSet<RolModel> Rols { get; set; }
 
-    public virtual DbSet<RolTienePermiso> RolTienePermisos { get; set; }
+    public virtual DbSet<RolTienePermisoModel> RolTienePermisos { get; set; }
 
-    public virtual DbSet<Tipodocumento> Tipodocumentos { get; set; }
+    public virtual DbSet<TipodocumentoModel> Tipodocumentos { get; set; }
 
-    public virtual DbSet<Tipopersona> Tipopersonas { get; set; }
+    public virtual DbSet<TipopersonaModel> Tipopersonas { get; set; }
 
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public virtual DbSet<UsuarioModel> Usuarios { get; set; }
 
    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ public partial class BdContext : DbContext
             .UseCollation("utf8_general_ci")
             .HasCharSet("utf8");
 
-        modelBuilder.Entity<Departamento>(entity =>
+        modelBuilder.Entity<DepartamentoModel>(entity =>
         {
             entity.HasKey(e => e.DepId).HasName("PRIMARY");
 
@@ -69,7 +69,7 @@ public partial class BdContext : DbContext
                 .HasColumnName("DEP_Nombre");
         });
 
-        modelBuilder.Entity<Doctieneetq>(entity =>
+        modelBuilder.Entity<DoctieneetqModel>(entity =>
         {
             entity.HasKey(e => new { e.FkdocId, e.FketqId })
                 .HasName("PRIMARY")
@@ -98,7 +98,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("fkEtqDocTienEtq");
         });
 
-        modelBuilder.Entity<Documento>(entity =>
+        modelBuilder.Entity<DocumentoModel>(entity =>
         {
             entity.HasKey(e => e.DocId).HasName("PRIMARY");
 
@@ -151,7 +151,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("fkTipDocDocumento");
         });
 
-        modelBuilder.Entity<Etiqueta>(entity =>
+        modelBuilder.Entity<EtiquetaModel>(entity =>
         {
             entity.HasKey(e => e.EtqId).HasName("PRIMARY");
 
@@ -165,7 +165,7 @@ public partial class BdContext : DbContext
                 .HasColumnName("ETQ_Tipo");
         });
 
-        modelBuilder.Entity<Generopersona>(entity =>
+        modelBuilder.Entity<GeneropersonaModel>(entity =>
         {
             entity.HasKey(e => e.GenId).HasName("PRIMARY");
 
@@ -180,7 +180,7 @@ public partial class BdContext : DbContext
                 .HasColumnName("GEN_GeneroPersona");
         });
 
-        modelBuilder.Entity<Institucion>(entity =>
+        modelBuilder.Entity<InstitucionModel>(entity =>
         {
             entity.HasKey(e => e.InsId).HasName("PRIMARY");
 
@@ -204,7 +204,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("fkMunInstitucion");
         });
 
-        modelBuilder.Entity<Municipio>(entity =>
+        modelBuilder.Entity<MunicipioModel>(entity =>
         {
             entity.HasKey(e => e.MunId).HasName("PRIMARY");
 
@@ -229,7 +229,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("fkDepMun");
         });
 
-        modelBuilder.Entity<Permiso>(entity =>
+        modelBuilder.Entity<PermisoModel>(entity =>
         {
             entity.HasKey(e => e.PermId).HasName("PRIMARY");
 
@@ -243,7 +243,7 @@ public partial class BdContext : DbContext
                 .HasColumnName("PERM_Permiso");
         });
 
-        modelBuilder.Entity<Persona>(entity =>
+        modelBuilder.Entity<PersonaModel>(entity =>
         {
             entity.HasKey(e => e.PerId).HasName("PRIMARY");
 
@@ -310,7 +310,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("FKUSUPersona");
         });
 
-        modelBuilder.Entity<Publicacion>(entity =>
+        modelBuilder.Entity<PublicacionModel>(entity =>
         {
             entity.HasKey(e => e.PubliId).HasName("PRIMARY");
 
@@ -333,7 +333,7 @@ public partial class BdContext : DbContext
                 .HasConstraintName("fkDocPublicacion");
         });
 
-        modelBuilder.Entity<Rol>(entity =>
+        modelBuilder.Entity<RolModel>(entity =>
         {
             entity.HasKey(e => e.RolId).HasName("PRIMARY");
 
@@ -347,7 +347,7 @@ public partial class BdContext : DbContext
                 .HasColumnName("ROL_Rol");
         });
 
-        modelBuilder.Entity<RolTienePermiso>(entity =>
+        modelBuilder.Entity<RolTienePermisoModel>(entity =>
         {
             entity.HasKey(e => new { e.PfkpermId, e.PfkrolId })
                 .HasName("PRIMARY")
@@ -373,8 +373,7 @@ public partial class BdContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fkRolRolTienPerm");
         });
-
-        modelBuilder.Entity<Tipodocumento>(entity =>
+        modelBuilder.Entity<TipodocumentoModel>(entity =>
         {
             entity.HasKey(e => e.TipdocId).HasName("PRIMARY");
 
@@ -387,8 +386,7 @@ public partial class BdContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("TIPDOC_Tipo");
         });
-
-        modelBuilder.Entity<Tipopersona>(entity =>
+        modelBuilder.Entity<TipopersonaModel>(entity =>
         {
             entity.HasKey(e => e.TiperId).HasName("PRIMARY");
 
@@ -401,8 +399,7 @@ public partial class BdContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("TIPER_TipoPersona");
         });
-
-        modelBuilder.Entity<Usuario>(entity =>
+        modelBuilder.Entity<UsuarioModel>(entity =>
         {
             entity.HasKey(e => e.UsuCorreo).HasName("PRIMARY");
 
@@ -425,9 +422,7 @@ public partial class BdContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKRolUsuario");
         });
-
         OnModelCreatingPartial(modelBuilder);
     }
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

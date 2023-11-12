@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoDePaz.Models;
 
-public partial class Doctieneetq
+public partial class DoctieneetqModel
 {
     public string FkdocId { get; set; } = null!;
 
@@ -11,7 +11,7 @@ public partial class Doctieneetq
 
     public sbyte DoctienetqEstado { get; set; }
 
-    public virtual Documento Fkdoc { get; set; } = null!;
+    public virtual DocumentoModel Fkdoc { get; set; } = null!;
 
-    public virtual Etiqueta Fketq { get; set; } = null!;
+    public virtual EtiquetaModel Fketq { get; set; } = null!;
 }
