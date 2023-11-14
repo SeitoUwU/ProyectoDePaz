@@ -15,7 +15,6 @@
         public RolModel rol = null!;
         public RolTienePermisoModel rolTienePermiso = null!;
         public TipodocumentoModel tipodocumento = null!;
-        public TipopersonaModel tipopersona = null!;
         public UsuarioModel usuario = null!;
 
     }

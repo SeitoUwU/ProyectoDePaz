@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using MySql.Data.MySqlClient;
 using ProyectoDePaz.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<MySqlConnection>(new MySqlConnection(builder.Configuration.GetConnectionString("ConexionMySql")));
 
 builder.Services.AddDbContext<BdContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("ConexionMysql"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.22-mysql")));

@@ -1,5 +1,6 @@
 ﻿@model ProyectoDePaz.Models.ContenedorModel
-@{
+@section ScriptsPersonalizados{
+    <script src="~/js/ScriptsRegistro.js"></script>
 }
 <div class="container py-5">
     <div class="row mb-4 mb-lg-5">
@@ -17,12 +18,19 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col"><input type="text" asp-for="persona.PerNombreUno" placeholder="Primer nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="text" placeholder="Primer apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="tel" placeholder="Numero telefonico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /></div>
                                         <div class="col">
-                                            <input type="text" placeholder="Segundo nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="text" placeholder="Segundo apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <input type="text" asp-for="persona.PerNombreUno" placeholder="Primer nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <input type="text" asp-for="persona.PerApellidoUno" placeholder="Primer apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <input type="tel" asp-for="persona.PerTelefono" placeholder="Numero telefonico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" asp-for="persona.PerNombreDos" placeholder="Segundo nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <input type="text" asp-for="persona.PerApellidoDos" placeholder="Segundo apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                             <div>
                                                 <code style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">Ingrese la fecha de nacimiento</code>
-                                                <div><input type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /></div>
+                                                <div>
+                                                    <input type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -30,27 +38,37 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
-                                            <select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                            <select asp-for="usuario.FkrolId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                 <option class="d-none" selected>Seleccione tipo persona</option>
-                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
-                                                <option class="d-none" selected>Seleccione genero</option>
-                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione institucion</option>
                                             </select>
+                                            <select asp-for="persona.FkgenId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
+                                                <option class="d-none" selected>Seleccione genero</option>
+                                            </select>
+                                            <div id="divInstitucion">
+                                                @*aqui va el select de instituciones*@
+                                            </div>
+                                            
                                         </div>
                                         <div class="col">
-                                            <select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                            <select id="dep" asp-items="ViewBag.departamento" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                 <option class="d-none" selected>Seleccione el departamento</option>
-                                            </select><select style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione el municipio</option>
-                                            </select><input type="email" placeholder="Correo electronico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" /><input type="password" placeholder="Contrasenia" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            </select>
+                                            <div id="divMunicipios">
+                                                @*aqui va el select de municipios*@
+                                            </div>
+                                            <input type="email" placeholder="Correo electronico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                            <input type="password" placeholder="Contrasenia" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="text-center" style="margin-top: 10px;"><button class="btn btn-primary" type="button" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">Registrar</button></div>
+                    <div class="text-center" style="margin-top: 10px;">
+                        <button asp-action="RegistroPersona" class="btn btn-primary" type="button" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
+                            Registrar
+                            </button>
+                    </div>
                 </div>
             </div>
         </div>

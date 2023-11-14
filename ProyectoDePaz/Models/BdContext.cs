@@ -41,7 +41,6 @@ public partial class BdContext : DbContext
 
     public virtual DbSet<TipodocumentoModel> Tipodocumentos { get; set; }
 
-    public virtual DbSet<TipopersonaModel> Tipopersonas { get; set; }
 
     public virtual DbSet<UsuarioModel> Usuarios { get; set; }
 
@@ -253,8 +252,6 @@ public partial class BdContext : DbContext
 
             entity.HasIndex(e => e.FkinsId, "fkInsPersona_idx");
 
-            entity.HasIndex(e => e.FktiperId, "fkTiPerPersona_idx");
-
             entity.HasIndex(e => e.FkusuCorreo, "fkUsuPersona_idx");
 
             entity.Property(e => e.PerId)
@@ -266,9 +263,6 @@ public partial class BdContext : DbContext
             entity.Property(e => e.FkinsId)
                 .HasMaxLength(45)
                 .HasColumnName("FKINS_ID");
-            entity.Property(e => e.FktiperId)
-                .HasMaxLength(45)
-                .HasColumnName("FKTIPER_ID");
             entity.Property(e => e.FkusuCorreo)
                 .HasMaxLength(45)
                 .HasColumnName("FKUSU_Correo");
@@ -299,10 +293,6 @@ public partial class BdContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKInsPersona");
 
-            entity.HasOne(d => d.Fktiper).WithMany(p => p.Personas)
-                .HasForeignKey(d => d.FktiperId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FKTiPerPersona");
 
             entity.HasOne(d => d.FkusuCorreoNavigation).WithMany(p => p.Personas)
                 .HasForeignKey(d => d.FkusuCorreo)
@@ -385,19 +375,6 @@ public partial class BdContext : DbContext
             entity.Property(e => e.TipdocTipo)
                 .HasMaxLength(45)
                 .HasColumnName("TIPDOC_Tipo");
-        });
-        modelBuilder.Entity<TipopersonaModel>(entity =>
-        {
-            entity.HasKey(e => e.TiperId).HasName("PRIMARY");
-
-            entity.ToTable("tipopersona");
-
-            entity.Property(e => e.TiperId)
-                .HasMaxLength(45)
-                .HasColumnName("TIPER_ID");
-            entity.Property(e => e.TiperTipoPersona)
-                .HasMaxLength(45)
-                .HasColumnName("TIPER_TipoPersona");
         });
         modelBuilder.Entity<UsuarioModel>(entity =>
         {

@@ -19,8 +19,6 @@ public partial class PersonaModel
 
     public string? PerEdad { get; set; }
 
-    public string FktiperId { get; set; } = null!;
-
     public string FkusuCorreo { get; set; } = null!;
 
     public string FkgenId { get; set; } = null!;
@@ -32,8 +30,6 @@ public partial class PersonaModel
     public virtual GeneropersonaModel Fkgen { get; set; } = null!;
 
     public virtual InstitucionModel Fkins { get; set; } = null!;
-
-    public virtual TipopersonaModel Fktiper { get; set; } = null!;
 
     public virtual UsuarioModel FkusuCorreoNavigation { get; set; } = null!;
 }
