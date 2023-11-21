@@ -14,7 +14,7 @@
             <div class="card" style="background: rgba(255, 255, 255, 0.66);color: var(--bs-emphasis-color);backdrop-filter: blur(7px);">
                 <div class="card-body">
                     <div>
-                        <form>
+                        <form asp-controller="IngresoUsuario">
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
@@ -44,18 +44,18 @@
                                             <select asp-for="persona.FkgenId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
                                                 <option class="d-none" selected>Seleccione genero</option>
                                             </select>
-                                            <div id="divInstitucion">
-                                                @*aqui va el select de instituciones*@
-                                            </div>
-                                            
+                                            <select id="institucion" asp-for="persona.FkinsId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione institucion</option>
+                                            </select>
+
                                         </div>
                                         <div class="col">
                                             <select id="dep" asp-items="ViewBag.departamento" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                 <option class="d-none" selected>Seleccione el departamento</option>
                                             </select>
-                                            <div id="divMunicipios">
-                                                @*aqui va el select de municipios*@
-                                            </div>
+                                            <select id="municipio" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                <option class="d-none" selected>Seleccione el municipio</option>
+                                            </select>
                                             <input type="email" placeholder="Correo electronico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                             <input type="password" placeholder="Contrasenia" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                         </div>
@@ -67,7 +67,7 @@
                     <div class="text-center" style="margin-top: 10px;">
                         <button asp-action="RegistroPersona" class="btn btn-primary" type="button" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
                             Registrar
-                            </button>
+                        </button>
                     </div>
                 </div>
             </div>

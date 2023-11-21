@@ -32,8 +32,7 @@ namespace ProyectoDePaz.Controllers
         {
             IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
             List<MunicipioModel> mun = ingUsu.getMunicipios(depId);
-            ViewBag.Municipios = new SelectList(mun, "MunId", "MunNombre");
-            return PartialView("_SelectsDinamicos");
+            return Json(mun);
         }
 
         [HttpGet]
@@ -41,8 +40,7 @@ namespace ProyectoDePaz.Controllers
         {
             IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
             List<InstitucionModel> ins = ingUsu.getInstituciones(munId);
-            ViewBag.Instituciones = new SelectList(ins, "InsId", "InsInstitucion");
-            return PartialView("_SelectsDinamicos");
+            return Json(ins);
         }
         
     }

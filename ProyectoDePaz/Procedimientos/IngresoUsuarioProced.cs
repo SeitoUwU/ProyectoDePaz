@@ -79,7 +79,7 @@ namespace ProyectoDePaz.Procedimientos
             return mun;
         }
 
-        internal List<InstitucionModel> getInstituciones(string munId)
+        public List<InstitucionModel> getInstituciones(string munId)
         {
             List<InstitucionModel> ins = new List<InstitucionModel>();
             try
