@@ -79,6 +79,68 @@ namespace ProyectoDePaz.Procedimientos
             return mun;
         }
 
+        public List<RolModel> getRol()
+        {
+            List<RolModel> rol = new List<RolModel>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new("mostrarRoles", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                RolModel rolModel = new RolModel();
+                                rolModel.RolId = reader.GetString(0);
+                                rolModel.RolRol = reader.GetString(1);
+                                rol.Add(rolModel);
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return rol;
+        }
+
+        public List<GeneropersonaModel> getGenero()
+        {
+            List<GeneropersonaModel> gen = new List<GeneropersonaModel>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new("mostrarGenero", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                GeneropersonaModel genero = new GeneropersonaModel();
+                                genero.GenId = reader.GetString(0);
+                                genero.GenGeneroPersona = reader.GetString(1);
+                                gen.Add(genero);
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return gen;
+        }
+
         public List<InstitucionModel> getInstituciones(string munId)
         {
             List<InstitucionModel> ins = new List<InstitucionModel>();
@@ -109,6 +171,37 @@ namespace ProyectoDePaz.Procedimientos
             {
             }
             return ins;
+        }
+
+        public void registrarUsuario(ContenedorModel contenedor)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new("registrarUsuario", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@nombreUno", contenedor.persona.PerNombreUno);
+                        command.Parameters.AddWithValue("@nombreDos", contenedor.persona.PerNombreDos);
+                        command.Parameters.AddWithValue("@ApellUno", contenedor.persona.PerApellidoUno);
+                        command.Parameters.AddWithValue("@ApellDos", contenedor.persona.PerApellidoDos);
+                        command.Parameters.AddWithValue("@telefono", contenedor.persona.PerTelefono);
+                        command.Parameters.AddWithValue("@edad", contenedor.persona.PerEdad);
+                        command.Parameters.AddWithValue("@tipopersona", contenedor.usuario.Fkrol);
+                        command.Parameters.AddWithValue("@correo", contenedor.usuario.UsuCorreo);
+                        command.Parameters.AddWithValue("@contrasenia", contenedor.usuario.UsuContrasenia);
+                        command.Parameters.AddWithValue("@genero", contenedor.persona.FkgenId);
+                        command.Parameters.AddWithValue("@instituto", contenedor.persona.FkinsId);
+                        command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

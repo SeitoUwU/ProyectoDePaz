@@ -20,10 +20,13 @@ namespace ProyectoDePaz.Controllers
         public IActionResult Registro()
         {
             IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
-
             List<DepartamentoModel> dep = ingUsu.getDepartamentos();
+            List<RolModel> roles = ingUsu.getRol();
+            List<GeneropersonaModel> generos = ingUsu.getGenero();
 
             ViewBag.departamento = new SelectList(dep, "DepId", "DepNombre");
+            ViewBag.roles = new SelectList(roles, "RolId", "RolRol");
+            ViewBag.generos = new SelectList(generos, "GenId", "GenGeneroPersona");
             return View();
         }
 
@@ -42,6 +45,14 @@ namespace ProyectoDePaz.Controllers
             List<InstitucionModel> ins = ingUsu.getInstituciones(munId);
             return Json(ins);
         }
-        
+
+        [HttpPost]
+        public IActionResult RegistroPersona(ContenedorModel contenedor)
+        {
+            IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            ingUsu.registrarUsuario(contenedor);
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

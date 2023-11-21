@@ -1,4 +1,4 @@
-﻿@model ProyectoDePaz.Models.ContenedorModel
+﻿@model ContenedorModel
 @section ScriptsPersonalizados{
     <script src="~/js/ScriptsRegistro.js"></script>
 }
@@ -13,8 +13,8 @@
         <div class="col">
             <div class="card" style="background: rgba(255, 255, 255, 0.66);color: var(--bs-emphasis-color);backdrop-filter: blur(7px);">
                 <div class="card-body">
-                    <div>
-                        <form asp-controller="IngresoUsuario">
+                    <form asp-controller="IngresoUsuario">
+                        <div>
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
@@ -29,7 +29,7 @@
                                             <div>
                                                 <code style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">Ingrese la fecha de nacimiento</code>
                                                 <div>
-                                                    <input type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                                    <input asp-for="persona.PerEdad" type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -38,10 +38,10 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
-                                            <select asp-for="usuario.FkrolId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                            <select asp-items="ViewBag.roles" asp-for="usuario.FkrolId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                 <option class="d-none" selected>Seleccione tipo persona</option>
                                             </select>
-                                            <select asp-for="persona.FkgenId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
+                                            <select asp-items="ViewBag.generos" asp-for="persona.FkgenId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
                                                 <option class="d-none" selected>Seleccione genero</option>
                                             </select>
                                             <select id="institucion" asp-for="persona.FkinsId" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
@@ -62,13 +62,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="text-center" style="margin-top: 10px;">
-                        <button asp-action="RegistroPersona" class="btn btn-primary" type="button" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
-                            Registrar
-                        </button>
-                    </div>
+                            <div class="text-center" style="margin-top: 10px;">
+                                <button asp-action="RegistroPersona" class="btn btn-primary" type="submit" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
+                                    Registrar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
