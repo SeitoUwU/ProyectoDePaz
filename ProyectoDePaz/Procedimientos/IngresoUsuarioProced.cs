@@ -203,5 +203,38 @@ namespace ProyectoDePaz.Procedimientos
             {
             }
         }
+
+        public UsuarioModel inicioSesion(UsuarioModel usu)
+        {
+            UsuarioModel usuario = new UsuarioModel();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(con.ConnectionString))
+                {
+                    conn.Open();
+                    using(MySqlCommand cmd = new MySqlCommand("inicioSesion", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@correo", usu.UsuCorreo);
+                        cmd.Parameters.AddWithValue("@contrasenia", usu.UsuContrasenia);
+
+                        cmd.ExecuteNonQuery();
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                usuario.FkrolId = reader.GetString(0);
+                            }
+                        }
+
+                    }
+                    conn.Close();
+                }
+            }catch (Exception ex)
+            {
+
+            }
+            return usuario;
+        }
     }
 }

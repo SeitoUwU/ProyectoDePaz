@@ -1,19 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MySql.Data.MySqlClient;
 using ProyectoDePaz.Models;
 using ProyectoDePaz.Procedimientos;
+using System;
+using System.Security.Claims;
 
 namespace ProyectoDePaz.Controllers
 {
     public class IngresoUsuarioController : Controller
     {
         private readonly MySqlConnection connection;
-        public IngresoUsuarioController(MySqlConnection connection) { 
+        public IngresoUsuarioController(MySqlConnection connection)
+        {
             this.connection = connection;
         }
         public IActionResult InicioSesion()
         {
+            ClaimsPrincipal c = HttpContext.User;
+            if (c.Identity != null)
+            {
+                if (c.Identity.IsAuthenticated)
+                {
+                    //return RedirectToAction("inicioAsesor", "AsesorController");
+                }
+            }
             return View();
         }
 
@@ -44,6 +57,37 @@ namespace ProyectoDePaz.Controllers
             IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
             List<InstitucionModel> ins = ingUsu.getInstituciones(munId);
             return Json(ins);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> IniciarSesion(UsuarioModel usuario)
+        {
+            IngresoUsuarioProced ingreso = new IngresoUsuarioProced(connection);
+            UsuarioModel usu = ingreso.inicioSesion(usuario);
+            if (usu.FkrolId != null)
+            {
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.NameIdentifier, usuario.UsuCorreo),
+                    new Claim(ClaimTypes.Role, usu.FkrolId),
+                    new Claim("correo", usuario.UsuCorreo)
+                };
+
+                ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                AuthenticationProperties authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    IsPersistent = false,
+                    ExpiresUtc = DateTimeOffset.MaxValue
+                };
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProperties);
+                if (usu.FkrolId == "a50e964f-8848-11ee-8027-cecd02c24f20" || usu.FkrolId == "a984b435-8848-11ee-8027-cecd02c24f20")
+                {
+                    TempData["rol"] = usu.FkrolId;
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return RedirectToAction("InicioSesion", "IngresoUsuario");
         }
 
         [HttpPost]

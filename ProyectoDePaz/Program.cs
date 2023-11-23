@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using ProyectoDePaz.Models;
@@ -11,6 +12,15 @@ builder.Services.AddSingleton<MySqlConnection>(new MySqlConnection(builder.Confi
 
 builder.Services.AddDbContext<BdContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("ConexionMysql"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.22-mysql")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/persona/InicioSesion";
+    });
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

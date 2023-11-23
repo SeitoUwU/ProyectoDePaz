@@ -1,5 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    string rol = "";
+    if (TempData.ContainsKey("rol") && TempData["rol"] != null)
+    {
+        rol = TempData["rol"].ToString();
+    }
+    if (rol == "a50e964f-8848-11ee-8027-cecd02c24f20" || rol == "a984b435-8848-11ee-8027-cecd02c24f20")
+    {
+        Layout = "_LayoutUsuario";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }
 <div class="container">
     <div style="margin-top: 20px;margin-bottom: 30px;">
