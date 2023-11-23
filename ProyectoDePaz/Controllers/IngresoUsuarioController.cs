@@ -47,9 +47,33 @@ namespace ProyectoDePaz.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistroPersona(ContenedorModel contenedor)
+        public IActionResult RegistroPersona(
+            string nombreUno, string apellUno, long telefono,
+            string nombreDos, string apellDos, string fechaNacimiento, string rol, string genero,
+            string institucion, string correo, string contrasenia)
         {
             IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            ContenedorModel contenedor = new ContenedorModel();
+
+            contenedor.persona = new PersonaModel();
+            contenedor.usuario = new UsuarioModel();
+
+            int anio = DateTime.Now.Year;
+            DateTime fechaNac = Convert.ToDateTime(fechaNacimiento);
+            int edad = anio - fechaNac.Year;
+
+            contenedor.persona.PerNombreUno = nombreUno;
+            contenedor.persona.PerApellidoUno = apellUno;
+            contenedor.persona.PerTelefono = telefono;
+            contenedor.persona.PerNombreDos = nombreDos;
+            contenedor.persona.PerApellidoDos = apellDos;
+            contenedor.persona.PerEdad = edad + "";
+            contenedor.usuario.FkrolId = rol;
+            contenedor.persona.FkgenId = genero;
+            contenedor.persona.FkinsId = institucion;
+            contenedor.usuario.UsuCorreo = correo;
+            contenedor.usuario.UsuContrasenia = contrasenia;
+
             ingUsu.registrarUsuario(contenedor);
             return RedirectToAction("Index", "Home");
         }

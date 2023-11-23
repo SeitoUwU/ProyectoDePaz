@@ -189,7 +189,7 @@ namespace ProyectoDePaz.Procedimientos
                         command.Parameters.AddWithValue("@ApellDos", contenedor.persona.PerApellidoDos);
                         command.Parameters.AddWithValue("@telefono", contenedor.persona.PerTelefono);
                         command.Parameters.AddWithValue("@edad", contenedor.persona.PerEdad);
-                        command.Parameters.AddWithValue("@tipopersona", contenedor.usuario.Fkrol);
+                        command.Parameters.AddWithValue("@tipopersona", contenedor.usuario.FkrolId);
                         command.Parameters.AddWithValue("@correo", contenedor.usuario.UsuCorreo);
                         command.Parameters.AddWithValue("@contrasenia", contenedor.usuario.UsuContrasenia);
                         command.Parameters.AddWithValue("@genero", contenedor.persona.FkgenId);
