@@ -17,6 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(o =>
     {
         o.LoginPath = "/persona/InicioSesion";
+        o.ExpireTimeSpan = TimeSpan.FromSeconds(10);
     });
 
 builder.Services.AddHttpContextAccessor();
@@ -36,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

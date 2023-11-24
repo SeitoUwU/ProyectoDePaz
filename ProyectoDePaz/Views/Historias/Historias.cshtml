@@ -1,7 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Security.Claims;
 @{
+    string rol = "";
+    Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+    if (claim != null)
+    {
+        rol = claim.Value + "";
+    }
+    if (rol == "a50e964f-8848-11ee-8027-cecd02c24f20" || rol == "a984b435-8848-11ee-8027-cecd02c24f20")
+    {
+        Layout = "_LayoutUsuario";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }
 <div class="container">
     <div class="text-center" style="margin-top: 10px;margin-bottom: 20px;">

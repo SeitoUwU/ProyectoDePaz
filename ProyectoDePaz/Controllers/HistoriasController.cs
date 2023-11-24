@@ -12,5 +12,9 @@ namespace ProyectoDePaz.Controllers
         {
             return View();
         }
+        public IActionResult MapaInteractivo()
+        {
+            return View();
+        }
     }
 }

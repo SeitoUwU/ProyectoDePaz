@@ -83,7 +83,6 @@ namespace ProyectoDePaz.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProperties);
                 if (usu.FkrolId == "a50e964f-8848-11ee-8027-cecd02c24f20" || usu.FkrolId == "a984b435-8848-11ee-8027-cecd02c24f20")
                 {
-                    TempData["rol"] = usu.FkrolId;
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -119,6 +118,12 @@ namespace ProyectoDePaz.Controllers
             contenedor.usuario.UsuContrasenia = contrasenia;
 
             ingUsu.registrarUsuario(contenedor);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> CerrarSesion()
+        {
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
