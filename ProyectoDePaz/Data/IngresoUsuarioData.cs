@@ -1,13 +1,13 @@
 ﻿using ProyectoDePaz.Models;
 using MySql.Data.MySqlClient;
 
-namespace ProyectoDePaz.Procedimientos
+namespace ProyectoDePaz.Data
 {
-    public class IngresoUsuarioProced
+    public class IngresoUsuarioData
     {
         private readonly MySqlConnection con;
 
-        public IngresoUsuarioProced(MySqlConnection con)
+        public IngresoUsuarioData(MySqlConnection con)
         {
             this.con = con;
         }

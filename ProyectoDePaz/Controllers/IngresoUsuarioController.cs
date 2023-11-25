@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MySql.Data.MySqlClient;
 using ProyectoDePaz.Models;
-using ProyectoDePaz.Procedimientos;
 using System;
 using System.Security.Claims;
+using ProyectoDePaz.Data;
 
 namespace ProyectoDePaz.Controllers
 {
@@ -32,7 +32,7 @@ namespace ProyectoDePaz.Controllers
 
         public IActionResult Registro()
         {
-            IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            IngresoUsuarioData ingUsu = new IngresoUsuarioData(connection);
             List<DepartamentoModel> dep = ingUsu.getDepartamentos();
             List<RolModel> roles = ingUsu.getRol();
             List<GeneropersonaModel> generos = ingUsu.getGenero();
@@ -46,7 +46,7 @@ namespace ProyectoDePaz.Controllers
         [HttpGet]
         public ActionResult mostrarMunicipio(String depId)
         {
-            IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            IngresoUsuarioData ingUsu = new IngresoUsuarioData(connection);
             List<MunicipioModel> mun = ingUsu.getMunicipios(depId);
             return Json(mun);
         }
@@ -54,7 +54,7 @@ namespace ProyectoDePaz.Controllers
         [HttpGet]
         public ActionResult mostrarInstitucion(String munId)
         {
-            IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            IngresoUsuarioData ingUsu = new IngresoUsuarioData(connection);
             List<InstitucionModel> ins = ingUsu.getInstituciones(munId);
             return Json(ins);
         }
@@ -62,7 +62,7 @@ namespace ProyectoDePaz.Controllers
         [HttpPost]
         public async Task<ActionResult> IniciarSesion(UsuarioModel usuario)
         {
-            IngresoUsuarioProced ingreso = new IngresoUsuarioProced(connection);
+            IngresoUsuarioData ingreso = new IngresoUsuarioData(connection);
             UsuarioModel usu = ingreso.inicioSesion(usuario);
             if (usu.FkrolId != null)
             {
@@ -95,7 +95,7 @@ namespace ProyectoDePaz.Controllers
             string nombreDos, string apellDos, string fechaNacimiento, string rol, string genero,
             string institucion, string correo, string contrasenia)
         {
-            IngresoUsuarioProced ingUsu = new IngresoUsuarioProced(connection);
+            IngresoUsuarioData ingUsu = new IngresoUsuarioData(connection);
             ContenedorModel contenedor = new ContenedorModel();
 
             contenedor.persona = new PersonaModel();

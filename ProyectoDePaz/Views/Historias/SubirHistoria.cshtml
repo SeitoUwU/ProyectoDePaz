@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div id="botonVideo" class="card btn" style="color: var(--bs-emphasis-color);">
+                                                <div id="botonVideo" data-valor="1" class="card btn" style="color: var(--bs-emphasis-color);">
                                                     <div class="card-body" style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
                                                         <h4 class="text-center card-title">Video</h4>
                                                         <div class="text-center"><a id="video"><img class="img-fluid" src="~/img/Play.png" /></a></div>
@@ -51,10 +51,8 @@
                                                                     <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione departamento de los hechos</code>
                                                                         <div>
-                                                                            <select>
-                                                                                <option value="12" selected>Departamento</option>
-                                                                                <option value="13">This is item 2</option>
-                                                                                <option value="14">This is item 3</option>
+                                                                            <select id="departamento" asp-items="ViewBag.departamentos">
+                                                                                <option class="d-none" selected>Departamento</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -63,10 +61,8 @@
                                                                     <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione municipio</code>
                                                                         <div>
-                                                                            <select>
-                                                                                <option value="12" selected>Municipio</option>
-                                                                                <option value="13">This is item 2</option>
-                                                                                <option value="14">This is item 3</option>
+                                                                            <select id="municipio">
+                                                                                <option class="d-none" selected>Municipio</option>
                                                                             </select>
                                                                         </div>
                                                                     </div><textarea placeholder="Ingrese descripcion" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" cols="40" rows="4"></textarea>
@@ -75,14 +71,14 @@
                                                             </div>
                                                             <div class="text-end">
                                                                 <button asp-action="SubirHistoria" class="btn btn-danger btn-sm" type="submit">Volver</button>
-                                                                <button class="btn btn-success btn-sm" type="submit" style="margin-left: 10px;">Aceptar</button>
+                                                                <button id="aceptarComic" class="btn btn-success btn-sm" type="button" style="margin-left: 10px;">Aceptar</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <div id="botonComic" class="card btn" style="color: var(--bs-emphasis-color);">
+                                                <div id="botonComic" data-valor="2" class="card btn" style="color: var(--bs-emphasis-color);">
                                                     <div class="card-body" style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
                                                         <h4 class="text-center card-title">Comic</h4>
                                                         <div class="text-center"><a id="comic"><img class="img-fluid" src="~/img/comic.png" /></a></div>
@@ -100,10 +96,8 @@
                                                                     <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione departamento de los hechos</code>
                                                                         <div>
-                                                                            <select>
-                                                                                <option value="12" selected>Departamento</option>
-                                                                                <option value="13">This is item 2</option>
-                                                                                <option value="14">This is item 3</option>
+                                                                            <select id="departamento2" asp-items="ViewBag.departamentos">
+                                                                                <option class="d-none" selected>Departamento</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -112,10 +106,8 @@
                                                                     <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione municipio</code>
                                                                         <div>
-                                                                            <select>
-                                                                                <option value="12" selected>Municipio</option>
-                                                                                <option value="13">This is item 2</option>
-                                                                                <option value="14">This is item 3</option>
+                                                                            <select id="municipio2">
+                                                                                <option class="d-none" selected>Municipio</option>
                                                                             </select>
                                                                         </div>
                                                                     </div><textarea placeholder="Ingrese descripcion" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" cols="40" rows="4"></textarea>
@@ -123,8 +115,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="text-end">
-                                                                <button asp-action="SubirHistoria" class="btn btn-danger btn-sm" type="submit">Volver</button>
-                                                                <button class="btn btn-success btn-sm" type="submit" style="margin-left: 10px;">Aceptar</button>
+                                                                <button class="btn btn-danger btn-sm" type="submit">Volver</button>
+                                                                <button id="acpetarVideo" class="btn btn-success btn-sm" type="button" style="margin-left: 10px;">Aceptar</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,6 +128,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="etiquetas" class="card d-none" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+            <div class="card-body">
+                <input type="text" id="nuevoInput" placeholder="Ingrese algo" class="form-control" />
+                <div class="text-center mt-3">
+                    <button id="nuevoBoton1" class="btn btn-primary">Botón 1</button>
+                    <button id="nuevoBoton2" class="btn btn-secondary">Botón 2</button>
                 </div>
             </div>
         </div>

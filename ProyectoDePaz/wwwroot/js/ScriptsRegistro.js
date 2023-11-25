@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     $('#dep').change(function () {
         var valorDep = $(this).val();
-        console.log(valorDep);
         $.ajax({
             url: '/IngresoUsuario/mostrarMunicipio',
             type: 'GET',
@@ -29,7 +28,6 @@
 
     $('#municipio').change(function () {
         var valorMun = $(this).val();
-        console.log(valorMun);
         $.ajax({
             url: '/IngresoUsuario/mostrarInstitucion',
             type: 'GET',

@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(o =>
     {
         o.LoginPath = "/persona/InicioSesion";
-        o.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+        //o.ExpireTimeSpan = TimeSpan.FromSeconds(10);
     });
 
 builder.Services.AddHttpContextAccessor();
