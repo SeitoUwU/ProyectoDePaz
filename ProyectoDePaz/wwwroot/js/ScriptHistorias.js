@@ -84,5 +84,6 @@ $(document).ready(function () {
         var valor = $(this).data('valor');
         console.log('Seleccionaste el botón Video con valor: ' + valor);
         // Puedes hacer algo con el valor aquí
+        //comentario muestra
     });
 });
