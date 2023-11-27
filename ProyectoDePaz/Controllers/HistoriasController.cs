@@ -19,10 +19,9 @@ namespace ProyectoDePaz.Controllers
         }
         public IActionResult SubirHistoria()
         {
-            IngresoUsuarioData ing = new IngresoUsuarioData(connection);
-            List<DepartamentoModel> dep = ing.getDepartamentos();
-            ViewBag.departamentos = new SelectList(dep, "DepId", "DepNombre");
-            return View();
+            HistoriasData historias = new HistoriasData(connection);
+            List<EtiquetaModel> etiquetas = historias.getEtiquetas();
+            return View(etiquetas);
         }
         public IActionResult MapaInteractivo()
         {

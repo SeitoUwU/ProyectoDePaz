@@ -98,9 +98,6 @@ namespace ProyectoDePaz.Controllers
             IngresoUsuarioData ingUsu = new IngresoUsuarioData(connection);
             ContenedorModel contenedor = new ContenedorModel();
 
-            contenedor.persona = new PersonaModel();
-            contenedor.usuario = new UsuarioModel();
-
             int anio = DateTime.Now.Year;
             DateTime fechaNac = Convert.ToDateTime(fechaNacimiento);
             int edad = anio - fechaNac.Year;

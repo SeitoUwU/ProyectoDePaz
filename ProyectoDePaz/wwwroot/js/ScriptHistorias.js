@@ -72,18 +72,12 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    // Manejar clic en botón Comic
     $('#botonComic').click(function () {
         var valor = $(this).data('valor');
         console.log('Seleccionaste el botón Comic con valor: ' + valor);
-        // Puedes hacer algo con el valor aquí
     });
-
-    // Manejar clic en botón Video
     $('#botonVideo').click(function () {
         var valor = $(this).data('valor');
         console.log('Seleccionaste el botón Video con valor: ' + valor);
-        // Puedes hacer algo con el valor aquí
-        //comentario muestra
     });
 });

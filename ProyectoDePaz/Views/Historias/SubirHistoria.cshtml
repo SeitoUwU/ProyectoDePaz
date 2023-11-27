@@ -132,15 +132,41 @@
                 </div>
             </div>
         </div>
-        <div id="etiquetas" class="card d-none" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+        <div id="etiquetas" class="card d-none" style="position: fixed; top: 50%; left: 50%; border-radius: 20px; transform: translate(-50%, -50%); z-index: 1000;">
             <div class="card-body">
-                <input type="text" id="nuevoInput" placeholder="Escriba una etiqueta" class="form-control" />
-                <ul id="listasDeEtiquetas"></ul>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" colspan="2">Etiquetas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i += 2)
+                            {
+                                <tr>
+                                    <td>
+                                        <input id="@Model[i].EtqId" type="checkbox">
+                                        <label>@Model[i].EtqTipo</label>
+                                    </td>
+                                    @if (i + 1 < Model.Count)
+                                    {
+                                        <td>
+                                            <input id="@Model[i + 1].EtqId" type="checkbox">
+                                            <label>@Model[i + 1].EtqTipo</label>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="text-center mt-3">
-                    <button id="nuevoBoton1" class="btn btn-primary">Botón 1</button>
-                    <button id="nuevoBoton2" class="btn btn-secondary">Botón 2</button>
+                    <button id="nuevoBoton1" class="btn btn-primary">Aceptar</button>
+                    <button id="nuevoBoton2" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
+
         </div>
     </div>
 </form>

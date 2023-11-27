@@ -11,35 +11,35 @@ namespace ProyectoDePaz.Data
             this.con = con;
         }
 
-        public List<TipodocumentoModel> getTipoDocumento()
+        public List<EtiquetaModel> getEtiquetas()
         {
-            List<TipodocumentoModel> tipodocumento = new List<TipodocumentoModel>();
+            List<EtiquetaModel> etiquetas = new List<EtiquetaModel>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+                using (MySqlConnection conn = new MySqlConnection(con.ConnectionString))
                 {
-                    connection.Open();
-                    using (MySqlCommand command = new("mostrarTipoDocumento", connection))
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand("mostrarEtiquetas", conn))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                TipodocumentoModel tipodocumentoModel = new TipodocumentoModel();
-                                tipodocumentoModel.TipdocId = reader.GetString(0);
-                                tipodocumentoModel.TipdocTipo = reader.GetString(1);
-                                tipodocumento.Add(tipodocumentoModel);
+                                EtiquetaModel etiqueta = new EtiquetaModel();
+                                etiqueta.EtqId = reader.GetString(0);
+                                etiqueta.EtqTipo = reader.GetString(1);
+                                etiquetas.Add(etiqueta);
                             }
                         }
+                        conn.Close();
                     }
-                    connection.Close();
                 }
             }
             catch (Exception ex)
             {
             }
-            return tipodocumento;
+            return etiquetas;
         }
     }
 }
