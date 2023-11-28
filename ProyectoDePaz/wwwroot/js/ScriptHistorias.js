@@ -25,9 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var miEtiqueta = document.getElementById('etiquetas');
         miEtiqueta.classList.remove('d-none');
     });
-    var botonAceptar2 = document.getElementById('acpetarComic');
-    botonAceptar2
-        .addEventListener('click', function () {
+    var botonAceptar2 = document.getElementById('aceptarComic');
+    botonAceptar2.addEventListener('click', function () {
         var miEtiqueta = document.getElementById('etiquetas');
         miEtiqueta.classList.remove('d-none');
     });
@@ -140,13 +139,13 @@ $(document).ready(function () {
             var descripcion = document.getElementById('descripcionComic').value;
             var check = document.getElementById('anonimoComic').checked;
             var documento = document.getElementById('documentoComic').files[0];
-
+            var etiquetasJSON = JSON.stringify(etiquetasSeleccionadas);
             var formData = new FormData(); 
             formData.append('titulo', titulo);
             formData.append('municipio', municipio);
             formData.append('descripcion', descripcion);
             formData.append('check', check);
-            formData.append('etiquetas', etiquetasSeleccionadas);
+            formData.append('etiquetas', etiquetasJSON);
             formData.append('documento', documento);
 
             $.ajax({

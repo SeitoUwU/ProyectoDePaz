@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ProyectoDePaz.Data;
 using ProyectoDePaz.Models;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace ProyectoDePaz.Controllers
 {
@@ -44,10 +45,39 @@ namespace ProyectoDePaz.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarComic()
+        public IActionResult RegistrarComic([FromForm] Dictionary<string, string> formData, IFormFile documento)
         {
-
-            return View();
+            DocumentoModel doc = new DocumentoModel();
+            HistoriasData historia = new HistoriasData(connection);
+            string[] etiquetas = null;
+            byte[] archivo = null;
+            if (formData != null && formData.Count > 0)
+            {
+                Guid id = Guid.NewGuid();
+                doc.DocId = id.ToString();
+                doc.DocTitulo = formData["titulo"];
+                doc.DocDescripcion = formData["descripcion"];
+                doc.FkmunId = formData["municipio"];
+                doc.FktipdocId = "cde76276-8b8c-11ee-ac4e-cecd02c24f20";
+                if (formData.TryGetValue("etiquetas", out string etiquetasJSON))
+                {
+                    etiquetas = JsonSerializer.Deserialize<string[]>(etiquetasJSON);
+                }
+                bool check = formData.ContainsKey("check") && bool.TryParse(formData["check"], out bool checkValue) ? checkValue : false;
+                if (!check)
+                {
+                    Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                    doc.FkperId = claim.Value;
+                }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    documento.CopyTo(ms);
+                    archivo = ms.ToArray();
+                }
+                doc.DocDocumento = archivo;
+                historia.RegistrarHistorias(doc, etiquetas);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -90,7 +120,7 @@ namespace ProyectoDePaz.Controllers
 
                 }
             }
-            return RedirectToAction("", "");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
