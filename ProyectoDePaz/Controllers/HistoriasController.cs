@@ -20,7 +20,12 @@ namespace ProyectoDePaz.Controllers
         public IActionResult SubirHistoria()
         {
             HistoriasData historias = new HistoriasData(connection);
+            IngresoUsuarioData ingreso = new IngresoUsuarioData(connection);
+            
+            List<DepartamentoModel> dep = ingreso.getDepartamentos();
             List<EtiquetaModel> etiquetas = historias.getEtiquetas();
+
+            ViewBag.departamentos = new SelectList(dep, "DepId", "DepNombre");
             return View(etiquetas);
         }
         public IActionResult MapaInteractivo()
@@ -34,6 +39,14 @@ namespace ProyectoDePaz.Controllers
             IngresoUsuarioData ingreso = new IngresoUsuarioData(connection);
             List<MunicipioModel> mun = ingreso.getMunicipios(depId);
             return Json(mun);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubirHistoria(
+            string titulo, string municipio, string descripcion, Boolean check, string[] etiquetas, IFormFile documento)
+        {
+            
+            return View();
         }
     }
 }

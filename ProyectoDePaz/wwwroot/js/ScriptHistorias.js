@@ -81,3 +81,26 @@ $(document).ready(function () {
         console.log('Seleccionaste el botón Video con valor: ' + valor);
     });
 });
+
+
+
+// Array para almacenar los IDs de las etiquetas seleccionadas
+var etiquetasSeleccionadas = [];
+
+function handleCheckboxChange(checkbox) {
+    var etqId = checkbox.id; // Obtener el ID del checkbox
+    if (checkbox.checked) {
+        // Si el checkbox está marcado, agregar el ID al arreglo
+        etiquetasSeleccionadas.push(etqId);
+    } else {
+        // Si el checkbox está desmarcado, eliminar el ID del arreglo
+        var index = etiquetasSeleccionadas.indexOf(etqId);
+        if (index !== -1) {
+            etiquetasSeleccionadas.splice(index, 1);
+        }
+    }
+
+    // Aquí puedes realizar cualquier acción adicional con el arreglo actualizado
+    // Por ejemplo, imprimir los IDs seleccionados en la consola
+    console.log("IDs seleccionados:", etiquetasSeleccionadas);
+}

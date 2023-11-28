@@ -2,7 +2,7 @@
 @using System.Security.Claims;
 @{
     string rol = "";
-    Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+    Claim claim = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
     if (claim != null)
     {
         rol = claim.Value + "";
@@ -16,7 +16,7 @@
         Layout = "_Layout";
     }
 }
-@section ScriptsPersonalizados{
+@section ScriptsPersonalizados {
     <script src="~/js/ScriptHistorias.js"></script>
 }
 <form asp-controller="Historias">
@@ -34,90 +34,137 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div id="botonVideo" data-valor="1" class="card btn" style="color: var(--bs-emphasis-color);">
-                                                    <div class="card-body" style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
+                                                <div id="botonVideo" data-valor="1" class="card btn"
+                                                    style="color: var(--bs-emphasis-color);">
+                                                    <div class="card-body"
+                                                        style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
                                                         <h4 class="text-center card-title">Video</h4>
-                                                        <div class="text-center"><a id="video"><img class="img-fluid" src="~/img/Play.png" /></a></div>
+                                                        <div class="text-center"><a id="video"><img class="img-fluid"
+                                                                    src="~/img/Play.png" /></a></div>
                                                     </div>
                                                 </div>
-                                                <div id="formularioComic" class="card d-none" style="color: var(--bs-emphasis-color);;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                    <div class="card-body" style="border-style: solid;border-radius: 20px;">
+                                                <div id="formularioComic" class="card d-none"
+                                                    style="color: var(--bs-emphasis-color);;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                    <div class="card-body"
+                                                        style="border-style: solid;border-radius: 20px;">
                                                         <div class="text-center">
                                                             <h1>Complete los datos</h1>
                                                         </div>
                                                         <div>
                                                             <div class="row">
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="Ingrese titulo" style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                                                    <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                    <input type="text" placeholder="Ingrese titulo"
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                                                    <div
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione departamento de los hechos</code>
                                                                         <div>
-                                                                            <select id="departamento" asp-items="ViewBag.departamentos">
-                                                                                <option class="d-none" selected>Departamento</option>
+                                                                            <select id="departamento"
+                                                                                asp-items="ViewBag.departamentos">
+                                                                                <option class="d-none" selected>
+                                                                                    Departamento</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                    <div
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione municipio</code>
                                                                         <div>
                                                                             <select id="municipio">
-                                                                                <option class="d-none" selected>Municipio</option>
+                                                                                <option class="d-none" selected>
+                                                                                    Municipio</option>
                                                                             </select>
                                                                         </div>
-                                                                    </div><textarea placeholder="Ingrese descripcion" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" cols="40" rows="4"></textarea>
-                                                                    <div class="form-check" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"><input id="formCheck-1" class="form-check-input" type="checkbox" /><label class="form-check-label" for="formCheck-1">¿Desea que sea anónimo? </label></div><input type="file" style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                                                    </div><textarea placeholder="Ingrese descripcion"
+                                                                        style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"
+                                                                        cols="40" rows="4"></textarea>
+                                                                    <div class="form-check"
+                                                                        style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                        <input id="formCheck-1" class="form-check-input"
+                                                                            type="checkbox" /><label
+                                                                            class="form-check-label"
+                                                                            for="formCheck-1">¿Desea que sea
+                                                                            anónimo? </label></div><input type="file"
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                                                 </div>
                                                             </div>
                                                             <div class="text-end">
-                                                                <button asp-action="SubirHistoria" class="btn btn-danger btn-sm" type="submit">Volver</button>
-                                                                <button id="aceptarComic" class="btn btn-success btn-sm" type="button" style="margin-left: 10px;">Aceptar</button>
+                                                                <button asp-action="SubirHistoria"
+                                                                    class="btn btn-danger btn-sm"
+                                                                    type="submit">Volver</button>
+                                                                <button id="aceptarComic" class="btn btn-success btn-sm"
+                                                                    type="button"
+                                                                    style="margin-left: 10px;">Aceptar</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <div id="botonComic" data-valor="2" class="card btn" style="color: var(--bs-emphasis-color);">
-                                                    <div class="card-body" style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
+                                                <div id="botonComic" data-valor="2" class="card btn"
+                                                    style="color: var(--bs-emphasis-color);">
+                                                    <div class="card-body"
+                                                        style="border-style: solid;border-color: var(--bs-emphasis-color);border-radius: 20px;">
                                                         <h4 class="text-center card-title">Comic</h4>
-                                                        <div class="text-center"><a id="comic"><img class="img-fluid" src="~/img/comic.png" /></a></div>
+                                                        <div class="text-center"><a id="comic"><img class="img-fluid"
+                                                                    src="~/img/comic.png" /></a></div>
                                                     </div>
                                                 </div>
-                                                <div id="formularioVideo" class="card d-none" style="color: var(--bs-emphasis-color);margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                    <div class="card-body" style="border-style: solid;border-radius: 20px;">
+                                                <div id="formularioVideo" class="card d-none"
+                                                    style="color: var(--bs-emphasis-color);margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                    <div class="card-body"
+                                                        style="border-style: solid;border-radius: 20px;">
                                                         <div class="text-center">
                                                             <h1>Complete los datos</h1>
                                                         </div>
                                                         <div>
                                                             <div class="row">
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="Ingrese titulo" style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                                                    <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                    <input type="text" placeholder="Ingrese titulo"
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                                                                    <div
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione departamento de los hechos</code>
                                                                         <div>
-                                                                            <select id="departamento2" asp-items="ViewBag.departamentos">
-                                                                                <option class="d-none" selected>Departamento</option>
+                                                                            <select id="departamento2"
+                                                                                asp-items="ViewBag.departamentos">
+                                                                                <option class="d-none" selected>
+                                                                                    Departamento</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <div style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                    <div
+                                                                        style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
                                                                         <code>Seleccione municipio</code>
                                                                         <div>
                                                                             <select id="municipio2">
-                                                                                <option class="d-none" selected>Municipio</option>
+                                                                                <option class="d-none" selected>
+                                                                                    Municipio</option>
                                                                             </select>
                                                                         </div>
-                                                                    </div><textarea placeholder="Ingrese descripcion" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" cols="40" rows="4"></textarea>
-                                                                    <div class="form-check" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"><input id="formCheck-2" class="form-check-input" type="checkbox" /><label class="form-check-label" for="formCheck-2">¿Desea que sea anónimo? </label></div><input type="url" placeholder="Ingrese el url del archivo" />
+                                                                    </div><textarea placeholder="Ingrese descripcion"
+                                                                        style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"
+                                                                        cols="40" rows="4"></textarea>
+                                                                    <div class="form-check"
+                                                                        style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
+                                                                        <input id="formCheck-2" class="form-check-input"
+                                                                            type="checkbox" /><label
+                                                                            class="form-check-label"
+                                                                            for="formCheck-2">¿Desea que sea
+                                                                            anónimo? </label></div><input type="url"
+                                                                        placeholder="Ingrese el url del archivo" />
                                                                 </div>
                                                             </div>
                                                             <div class="text-end">
-                                                                <button class="btn btn-danger btn-sm" type="submit">Volver</button>
-                                                                <button id="acpetarVideo" class="btn btn-success btn-sm" type="button" style="margin-left: 10px;">Aceptar</button>
+                                                                <button class="btn btn-danger btn-sm"
+                                                                    type="submit">Volver</button>
+                                                                <button id="acpetarVideo" class="btn btn-success btn-sm"
+                                                                    type="button"
+                                                                    style="margin-left: 10px;">Aceptar</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -132,7 +179,8 @@
                 </div>
             </div>
         </div>
-        <div id="etiquetas" class="card d-none" style="position: fixed; top: 50%; left: 50%; border-radius: 20px; transform: translate(-50%, -50%); z-index: 1000;">
+        <div id="etiquetas" class="card d-none"
+            style="position: fixed; top: 50%; left: 50%; border-radius: 20px; transform: translate(-50%, -50%); z-index: 1000;">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
@@ -146,18 +194,20 @@
                             {
                                 <tr>
                                     <td>
-                                        <input id="@Model[i].EtqId" type="checkbox">
+                                        <input id="@Model[i].EtqId" type="checkbox" onchange="handleCheckboxChange(this)">
                                         <label>@Model[i].EtqTipo</label>
                                     </td>
                                     @if (i + 1 < Model.Count)
                                     {
                                         <td>
-                                            <input id="@Model[i + 1].EtqId" type="checkbox">
+                                            <input id="@Model[i + 1].EtqId" type="checkbox"
+                                                onchange="handleCheckboxChange(this)">
                                             <label>@Model[i + 1].EtqTipo</label>
                                         </td>
                                     }
                                 </tr>
                             }
+
                         </tbody>
                     </table>
                 </div>
