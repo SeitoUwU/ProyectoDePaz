@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         miEtiqueta.classList.remove('d-none');
     });
     var botonAceptar2 = document.getElementById('acpetarComic');
-    botonAceptar2.addEventListener('click', function () {
+    botonAceptar2
+        .addEventListener('click', function () {
         var miEtiqueta = document.getElementById('etiquetas');
         miEtiqueta.classList.remove('d-none');
     });
