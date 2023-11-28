@@ -19,7 +19,7 @@
 @section ScriptsPersonalizados {
     <script src="~/js/ScriptHistorias.js"></script>
 }
-<form asp-controller="Historias">
+<form asp-controller="Historias" enctype="multipart/form-data">
     <div class="container">
         <div>
             <div>
@@ -53,7 +53,7 @@
                                                         <div>
                                                             <div class="row">
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="Ingrese titulo"
+                                                                    <input type="text" id="tituloComic" placeholder="Ingrese titulo"
                                                                         style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                                                     <div
                                                                         style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
@@ -77,21 +77,21 @@
                                                                                     Municipio</option>
                                                                             </select>
                                                                         </div>
-                                                                    </div><textarea placeholder="Ingrese descripcion"
+                                                                    </div><textarea id="descripcionComic" placeholder="Ingrese descripcion"
                                                                         style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"
                                                                         cols="40" rows="4"></textarea>
                                                                     <div class="form-check"
                                                                         style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                                        <input id="formCheck-1" class="form-check-input"
+                                                                        <input id="anonimoComic" class="form-check-input"
                                                                             type="checkbox" /><label
                                                                             class="form-check-label"
-                                                                            for="formCheck-1">¿Desea que sea
-                                                                            anónimo? </label></div><input type="file"
+                                                                            for="anonimoComic">¿Desea que sea
+                                                                            anónimo? </label></div><input id="documentoComic" type="file"
                                                                         style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                                                 </div>
                                                             </div>
                                                             <div class="text-end">
-                                                                <button asp-action="SubirHistoria"
+                                                                <button asp-controller="Historias" asp-action="SubirHistoria"
                                                                     class="btn btn-danger btn-sm"
                                                                     type="submit">Volver</button>
                                                                 <button id="aceptarComic" class="btn btn-success btn-sm"
@@ -122,7 +122,7 @@
                                                         <div>
                                                             <div class="row">
                                                                 <div class="col">
-                                                                    <input type="text" placeholder="Ingrese titulo"
+                                                                    <input id="tituloVideo" type="text" placeholder="Ingrese titulo"
                                                                         style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
                                                                     <div
                                                                         style="min-height: 0px;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
@@ -146,22 +146,23 @@
                                                                                     Municipio</option>
                                                                             </select>
                                                                         </div>
-                                                                    </div><textarea placeholder="Ingrese descripcion"
+                                                                    </div><textarea id="descripcionVideo" placeholder="Ingrese descripcion"
                                                                         style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;"
                                                                         cols="40" rows="4"></textarea>
                                                                     <div class="form-check"
                                                                         style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                                        <input id="formCheck-2" class="form-check-input"
+                                                                        <input id="anonimoVideo" class="form-check-input"
                                                                             type="checkbox" /><label
                                                                             class="form-check-label"
                                                                             for="formCheck-2">¿Desea que sea
-                                                                            anónimo? </label></div><input type="url"
+                                                                            anónimo? </label></div><input id="urlVideo" type="url"
                                                                         placeholder="Ingrese el url del archivo" />
                                                                 </div>
                                                             </div>
                                                             <div class="text-end">
-                                                                <button class="btn btn-danger btn-sm"
-                                                                    type="submit">Volver</button>
+                                                                <button class="btn btn-danger btn-sm" asp-controller="Historias" asp-action="SubirHistoria" type="submit">
+                                                                    Volver
+                                                                </button>
                                                                 <button id="acpetarVideo" class="btn btn-success btn-sm"
                                                                     type="button"
                                                                     style="margin-left: 10px;">Aceptar</button>
@@ -212,7 +213,7 @@
                     </table>
                 </div>
                 <div class="text-center mt-3">
-                    <button id="nuevoBoton1" class="btn btn-primary">Aceptar</button>
+                    <button id="enviarFormulario" class="btn btn-primary">Aceptar</button>
                     <button id="nuevoBoton2" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>

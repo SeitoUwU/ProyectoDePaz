@@ -7,6 +7,8 @@ const acepComic = document.getElementById("aceptarComic");
 const acepVideo = document.getElementById("aceptarVideo");
 const etq = document.getElementById("etiquetas");
 
+var tipoDeDoc;
+
 vid.addEventListener("click", function () {
     com.classList.add("d-none");
     fvid.classList.remove("d-none");
@@ -20,6 +22,11 @@ com.addEventListener("click", function () {
 document.addEventListener('DOMContentLoaded', function () {
     var botonAceptar = document.getElementById('acpetarVideo');
     botonAceptar.addEventListener('click', function () {
+        var miEtiqueta = document.getElementById('etiquetas');
+        miEtiqueta.classList.remove('d-none');
+    });
+    var botonAceptar2 = document.getElementById('acpetarComic');
+    botonAceptar2.addEventListener('click', function () {
         var miEtiqueta = document.getElementById('etiquetas');
         miEtiqueta.classList.remove('d-none');
     });
@@ -74,15 +81,15 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#botonComic').click(function () {
         var valor = $(this).data('valor');
+        tipoDeDoc = valor;
         console.log('Seleccionaste el botón Comic con valor: ' + valor);
     });
     $('#botonVideo').click(function () {
         var valor = $(this).data('valor');
+        tipoDeDoc = valor;
         console.log('Seleccionaste el botón Video con valor: ' + valor);
     });
 });
-
-
 
 // Array para almacenar los IDs de las etiquetas seleccionadas
 var etiquetasSeleccionadas = [];
@@ -99,8 +106,55 @@ function handleCheckboxChange(checkbox) {
             etiquetasSeleccionadas.splice(index, 1);
         }
     }
-
-    // Aquí puedes realizar cualquier acción adicional con el arreglo actualizado
-    // Por ejemplo, imprimir los IDs seleccionados en la consola
-    console.log("IDs seleccionados:", etiquetasSeleccionadas);
 }
+
+$(document).ready(function () {
+    $('#enviarFormulario').click(function () {
+        if (tipoDeDoc == 1) {
+            var titulo = document.getElementById('tituloVideo').value;
+            var municipio = document.getElementById('municipio2').value;
+            var descripcion = document.getElementById('descripcionVideo').value;
+            var check = document.getElementById('anonimoVideo').checked;
+            var url = document.getElementById('urlVideo').value;
+
+            var data = {
+                titulo: titulo,
+                municipio: municipio,
+                descripcion: descripcion,
+                check: check,
+                etiquetas: etiquetasSeleccionadas,
+                url: url
+            }
+
+            $.ajax({
+                url: '/Historias/RegistrarVideo',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data)
+            });
+
+        } else if (tipoDeDoc == 2) {
+            var titulo = document.getElementById('tituloComic').value;
+            var municipio = document.getElementById('municipio').value;
+            var descripcion = document.getElementById('descripcionComic').value;
+            var check = document.getElementById('anonimoComic').checked;
+            var documento = document.getElementById('documentoComic').files[0];
+
+            var formData = new FormData(); 
+            formData.append('titulo', titulo);
+            formData.append('municipio', municipio);
+            formData.append('descripcion', descripcion);
+            formData.append('check', check);
+            formData.append('etiquetas', etiquetasSeleccionadas);
+            formData.append('documento', documento);
+
+            $.ajax({
+                url: '/Historias/RegistrarComic',
+                type: 'POST',
+                processData: false, // Evita que jQuery procese los datos
+                contentType: false, // Evita que jQuery configure el tipo de contenido
+                data: formData
+            });
+        }
+    });
+});

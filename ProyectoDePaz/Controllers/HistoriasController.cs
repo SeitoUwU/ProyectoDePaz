@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 using ProyectoDePaz.Data;
 using ProyectoDePaz.Models;
+using System.Security.Claims;
 
 namespace ProyectoDePaz.Controllers
 {
@@ -21,7 +23,7 @@ namespace ProyectoDePaz.Controllers
         {
             HistoriasData historias = new HistoriasData(connection);
             IngresoUsuarioData ingreso = new IngresoUsuarioData(connection);
-            
+
             List<DepartamentoModel> dep = ingreso.getDepartamentos();
             List<EtiquetaModel> etiquetas = historias.getEtiquetas();
 
@@ -42,11 +44,53 @@ namespace ProyectoDePaz.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubirHistoria(
-            string titulo, string municipio, string descripcion, Boolean check, string[] etiquetas, IFormFile documento)
+        public IActionResult RegistrarComic()
         {
-            
+
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarVideo()
+        {
+            DocumentoModel doc = new DocumentoModel();
+            HistoriasData historia = new HistoriasData(connection);
+            string datos;
+            using (var reader = new System.IO.StreamReader(Request.Body))
+            {
+                datos = await reader.ReadToEndAsync();
+            }
+
+            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(datos);
+
+            if (data != null)
+            {
+                if (
+                    data.TryGetValue("titulo", out var tituloObj) &&
+                    data.TryGetValue("municipio", out var municipioObj) &&
+                    data.TryGetValue("descripcion", out var descripcionObj) &&
+                    data.TryGetValue("check", out var checkObj) &&
+                    data.TryGetValue("etiquetas", out var etiquetasObj) &&
+                    data.TryGetValue("url", out var urlObj))
+                {
+                    Guid id = Guid.NewGuid();
+                    doc.DocId = id.ToString();
+                    doc.FktipdocId = "cdcb9d72-8b8c-11ee-ac4e-cecd02c24f20";
+                    doc.DocTitulo = (string)tituloObj;
+                    doc.FkmunId = (string)municipioObj;
+                    doc.DocDescripcion = (string)descripcionObj;
+                    doc.DocLink = (string)urlObj;
+                    if (!(bool)checkObj)
+                    {
+                        Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                        doc.FkperId = claim.Value;
+                    }
+                    string[] etiquetas = ((JArray)etiquetasObj).ToObject<string[]>();
+                    historia.RegistrarHistorias(doc, etiquetas);
+
+                }
+            }
+            return RedirectToAction("", "");
         }
     }
 }
