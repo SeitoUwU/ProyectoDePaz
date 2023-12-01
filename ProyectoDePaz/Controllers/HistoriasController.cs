@@ -18,7 +18,9 @@ namespace ProyectoDePaz.Controllers
         }
         public IActionResult Historias()
         {
-            return View();
+            HistoriasData historia = new HistoriasData(connection);
+            List<ContenedorModel> historias = historia.mostrarHistorias();
+            return View(historias);
         }
         public IActionResult SubirHistoria()
         {

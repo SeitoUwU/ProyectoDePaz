@@ -82,5 +82,41 @@ namespace ProyectoDePaz.Data
             }
             return true;
         }
+
+        public List<ContenedorModel> mostrarHistorias()
+        {
+            List<ContenedorModel> historias = new List<ContenedorModel>();
+            try
+            {
+                using(MySqlConnection conn = new MySqlConnection(con.ConnectionString)){
+                    conn.Open();
+                    using(MySqlCommand cmd = new MySqlCommand("mostrarDocumentos", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.ExecuteNonQuery();
+                        using(MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while(reader.Read())
+                            {
+                                ContenedorModel historia = new ContenedorModel();
+                                historia.documento.DocTitulo = reader.GetString(0);
+                                historia.documento.DocDescripcion = reader.GetString(1);
+                                historia.persona.PerNombreUno = reader.GetString(2);
+                                historia.persona.PerApellidoUno = reader.GetString(3);
+                                historia.tipodocumento.TipdocTipo = reader.GetString(4);
+                                historia.publicacion.PubliFechaPublicacion = reader.GetString(5);
+                                historias.Add(historia);
+                            }
+                        }
+                    }
+                    conn.Close();
+                }    
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+            return historias;
+        }
     }
 }

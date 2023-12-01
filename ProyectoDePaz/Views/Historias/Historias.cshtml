@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims;
+﻿@model List<ContenedorModel>;
+@using System.Security.Claims;
 @{
     string rol = "";
     Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
@@ -23,8 +24,11 @@
             </div>
             <div class="col">
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Dropdown </button>
-                    <div class="dropdown-menu dropdown-menu-dark"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                    <button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
+                        type="button">Filtrar Historias </button>
+                    <div class="dropdown-menu dropdown-menu-dark"><a class="dropdown-item" href="#">First Item</a><a
+                            class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third
+                            Item</a></div>
                 </div>
             </div>
         </div>
@@ -37,9 +41,12 @@
     <div class="simple-slider">
         <div class="swiper-container" style="border-radius: 20px;">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background: url('Evangelion.jpg') center center / cover no-repeat;"></div>
-                <div class="swiper-slide" style="background: url('shingeki.jpg') center center / cover no-repeat;"></div>
-                <div class="swiper-slide" style="background: url('Seishum.jpeg') center center / cover no-repeat;"></div>
+                <div class="swiper-slide" style="background: url('Evangelion.jpg') center center / cover no-repeat;">
+                </div>
+                <div class="swiper-slide" style="background: url('shingeki.jpg') center center / cover no-repeat;">
+                </div>
+                <div class="swiper-slide" style="background: url('Seishum.jpeg') center center / cover no-repeat;">
+                </div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -49,73 +56,29 @@
 </div>
 <div class="container py-4 py-xl-5" style="margin-top: 50px;">
     <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-        <div class="col">
-            <div class="card">
-                <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
-                <div class="card-body p-4">
-                    <p class="text-primary card-text mb-0">Video</p>
-                    <h4 class="card-title">La vida en mi escuelita</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <div class="d-flex">
-                        <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
-                        <div>
-                            <p class="fw-bold mb-0">John Smith</p>
-                            <p class="text-muted mb-0">15-12-2024</p>
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card">
+                    <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
+                    <div class="card-body p-4">
+                        <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
+                        <h4 class="card-title">@item.documento.DocTitulo</h4>
+                        <p class="card-text">@item.documento.DocDescripcion</p>
+                        <div class="d-flex">
+                            <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
+                                src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
+                            <div>
+                                <div class="d-flex">
+                                    <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
+                                    <p class="text-muted mb-0 ms-2">@item.persona.PerApellidoUno</p>
+                                </div>
+                                <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Evangelion.jpg" />
-                <div class="card-body p-4">
-                    <p class="text-primary card-text mb-0">Comic</p>
-                    <h4 class="card-title">Aquella noche trágica</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <div class="d-flex">
-                        <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
-                        <div>
-                            <p class="fw-bold mb-0">John Smith</p>
-                            <p class="text-muted mb-0">Erat netus</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="shingeki.jpg" />
-                <div class="card-body p-4">
-                    <p class="text-primary card-text mb-0">Video</p>
-                    <h4 class="card-title">Asi es la vida</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <div class="d-flex">
-                        <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
-                        <div>
-                            <p class="fw-bold mb-0">John Smith</p>
-                            <p class="text-muted mb-0">Erat netus</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="school.jpg" />
-                <div class="card-body p-4">
-                    <p class="text-primary card-text mb-0">Video</p>
-                    <h4 class="card-title">La perspectiva del que calla</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <div class="d-flex">
-                        <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
-                        <div>
-                            <p class="fw-bold mb-0">Anónimo </p>
-                            <p class="text-muted mb-0">12-01-2023</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>

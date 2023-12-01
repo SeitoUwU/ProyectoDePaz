@@ -7,7 +7,7 @@ public partial class PublicacionModel
 {
     public string PubliId { get; set; } = null!;
 
-    public DateOnly PubliFechaPublicacion { get; set; }
+    public string PubliFechaPublicacion { get; set; } = null!;
 
     public sbyte PubliEstado { get; set; }
 
