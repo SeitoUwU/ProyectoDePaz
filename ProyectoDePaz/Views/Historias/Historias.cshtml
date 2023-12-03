@@ -16,6 +16,9 @@
         Layout = "_Layout";
     }
 }
+@section ScriptsPersonalizados {
+    <script src="~/js/scriptVerHistorias.js"></script>
+}
 <div class="container">
     <div class="text-center" style="margin-top: 10px;margin-bottom: 20px;">
         <div class="row">
@@ -24,61 +27,86 @@
             </div>
             <div class="col">
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
-                        type="button">Filtrar Historias </button>
-                    <div class="dropdown-menu dropdown-menu-dark"><a class="dropdown-item" href="#">First Item</a><a
-                            class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third
-                            Item</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="text-center">
-        <div style="margin-bottom: 20px;">
-            <h1>Agregado recientemente</h1>
-        </div>
-    </div>
-    <div class="simple-slider">
-        <div class="swiper-container" style="border-radius: 20px;">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background: url('Evangelion.jpg') center center / cover no-repeat;">
-                </div>
-                <div class="swiper-slide" style="background: url('shingeki.jpg') center center / cover no-repeat;">
-                </div>
-                <div class="swiper-slide" style="background: url('Seishum.jpeg') center center / cover no-repeat;">
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
-</div>
-<div class="container py-4 py-xl-5" style="margin-top: 50px;">
-    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-        @foreach (var item in Model)
-        {
-            <div class="col">
-                <div class="card">
-                    <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
-                    <div class="card-body p-4">
-                        <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
-                        <h4 class="card-title">@item.documento.DocTitulo</h4>
-                        <p class="card-text">@item.documento.DocDescripcion</p>
-                        <div class="d-flex">
-                            <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
-                                src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" />
-                            <div>
-                                <div class="d-flex">
-                                    <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
-                                    <p class="text-muted mb-0 ms-2">@item.persona.PerApellidoUno</p>
-                                </div>
-                                <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Filtrar Historias
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-dark">
+                        <div id="subMenuEtq" class="dropdown ">
+                            <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Etiquetas
+                            </button>
+                            <div id="menuDep" class="dropdown-menu dropdown-menu-dark dropdown-menu-end" data-bs-direction="right">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.etiqueta.EtqId != null)
+                                    {
+                                        <a data-value="@item.etiqueta.EtqId" class="etiqueta dropdown-item">@item.etiqueta.EtqTipo</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div id="subMenuDep" class="dropdown ">
+                            <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Departamentos
+                            </button>
+                            <div id="menuDep" class="dropdown-menu dropdown-menu-dark dropdown-menu-end" data-bs-direction="right">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.departamento.DepId != null)
+                                    {
+                                        <a data-value="@item.departamento.DepId" class="departamento dropdown-item">@item.departamento.DepNombre</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div id="subMenuTipDoc" class="dropdown ">
+                            <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Tipo de historias
+                            </button>
+                            <div id="menuDep" class="dropdown-menu dropdown-menu-dark dropdown-menu-end" data-bs-direction="right">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.tipodocumento.TipdocId != null)
+                                    {
+                                        <a data-value="@item.tipodocumento.TipdocId" class="tipo dropdown-item">@item.tipodocumento.TipdocTipo</a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div id="mostrarHistorias" class="container py-4 py-xl-5" style="margin-top: 50px;">
+    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+        @foreach (var item in Model)
+        {
+            if (item.documento.DocId != null)
+            {
+                <div class="col">
+                    <div value="@item.documento.DocId" class="btn card">
+                        <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
+                        <div class="card-body p-4">
+                            <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
+                            <h4 class="card-title">@item.documento.DocTitulo</h4>
+                            <p class="card-text text-start">@item.documento.DocDescripcion</p>
+                            <div class="d-flex">
+                                <div>
+                                    <div class="d-flex">
+                                        <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
+                                        <p class="fw-bold mb-0 ms-2">@item.persona.PerApellidoUno</p>
+                                    </div>
+                                    <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
     </div>
+</div>
+<div id="historiasFiltradas" class="d-none">
 </div>

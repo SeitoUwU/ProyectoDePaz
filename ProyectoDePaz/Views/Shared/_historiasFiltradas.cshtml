@@ -1,0 +1,32 @@
+﻿@model List<ContenedorModel>;
+<div id="historiasFiltradas">
+    <div id="mostrarHistorias" class="container py-4 py-xl-5" style="margin-top: 50px;">
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            @foreach (var item in Model)
+            {
+                if (item.documento.DocId != null)
+                {
+                    <div class="col">
+                        <div value="@item.documento.DocId" class="btn card">
+                            <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
+                            <div class="card-body p-4">
+                                <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
+                                <h4 class="card-title">@item.documento.DocTitulo</h4>
+                                <p class="card-text text-start">@item.documento.DocDescripcion</p>
+                                <div class="d-flex">
+                                    <div>
+                                        <div class="d-flex">
+                                            <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
+                                            <p class="fw-bold mb-0 ms-2">@item.persona.PerApellidoUno</p>
+                                        </div>
+                                        <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

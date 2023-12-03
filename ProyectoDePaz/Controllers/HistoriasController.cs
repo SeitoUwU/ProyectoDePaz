@@ -20,7 +20,7 @@ namespace ProyectoDePaz.Controllers
         {
             HistoriasData historia = new HistoriasData(connection);
             List<ContenedorModel> historias = historia.mostrarHistorias();
-            return View(historias);
+            return View(historia.obtenerFiltros(historias));
         }
         public IActionResult SubirHistoria()
         {
@@ -34,6 +34,13 @@ namespace ProyectoDePaz.Controllers
             return View(etiquetas);
         }
         public IActionResult MapaInteractivo()
+        {
+            HistoriasData historias = new HistoriasData(connection);
+            List<ContenedorModel> documentos = historias.getDocumentosMunicipio();
+            return View(documentos);
+        }
+
+        public IActionResult VerHistoria()
         {
             return View();
         }
@@ -123,6 +130,13 @@ namespace ProyectoDePaz.Controllers
                 }
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult filtrarHistoria(string idEtiquetas, string idTipo, string idDep)
+        {
+            HistoriasData historias = new HistoriasData(connection);
+            List<ContenedorModel> historiasFiltradas = historias.filtrarHistorias(idEtiquetas, idDep, idTipo);
+            return PartialView("_HistoriasFiltradas", historiasFiltradas); 
         }
     }
 }
