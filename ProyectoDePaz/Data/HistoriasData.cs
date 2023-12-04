@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using ProyectoDePaz.Models;
+using System.Data.SqlTypes;
 
 namespace ProyectoDePaz.Data
 {
@@ -190,7 +191,7 @@ namespace ProyectoDePaz.Data
 
         public List<ContenedorModel> filtrarHistorias(string idEtq, string idDep, string idTipo)
         {
-            List<ContenedorModel> historias = new List<ContenedorModel> ();
+            List<ContenedorModel> historias = new List<ContenedorModel>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
@@ -221,7 +222,8 @@ namespace ProyectoDePaz.Data
                     }
                     connection.Close();
                 }
-            } catch (System.Exception) { throw; }
+            }
+            catch (System.Exception) { throw; }
             return historias;
         }
 
@@ -233,7 +235,7 @@ namespace ProyectoDePaz.Data
                 using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
                 {
                     connection.Open();
-                    using(MySqlCommand command = new MySqlCommand("mostrarDocumentosMuni", connection))
+                    using (MySqlCommand command = new MySqlCommand("mostrarDocumentosMuni", connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
@@ -249,8 +251,77 @@ namespace ProyectoDePaz.Data
                         }
                     }
                 }
-            } catch (System.Exception) { throw; }
+            }
+            catch (System.Exception) { throw; }
             return documentos;
+        }
+
+        public ContenedorModel GetDocumento(string id)
+        {
+            ContenedorModel documento = new ContenedorModel();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+                {
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand("mostrarDocumento", connection))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                documento.tipodocumento.TipdocId = reader.GetString(0);
+                                if (!reader.IsDBNull(1))
+                                {
+                                    documento.documento.DocLink = reader.GetString(1);
+                                }
+                                if (!reader.IsDBNull(2))
+                                {
+                                    long fileSize = reader.GetBytes(2, 0, null, 0, 0); // Obtener el tamaño del archivo
+                                    byte[] fileData = new byte[fileSize]; // Crear un arreglo de bytes del tamaño del archivo
+
+                                    long bytesRead = 0;
+                                    int bufferSize = 1024;
+                                    int currentIndex = 0;
+
+                                    while (bytesRead < fileSize)
+                                    {
+                                        int curBytes = (int)reader.GetBytes(2, bytesRead, fileData, currentIndex, bufferSize);
+
+                                        // Verificar si hay más datos para leer y ajustar el tamaño del búfer si es necesario
+                                        if (curBytes == 0)
+                                        {
+                                            bufferSize *= 2; // Duplicar el tamaño del búfer si no se leyó ningún byte
+                                        }
+
+                                        bytesRead += curBytes;
+                                        currentIndex += curBytes;
+
+                                        if (currentIndex + bufferSize > fileSize)
+                                        {
+                                            bufferSize = (int)(fileSize - currentIndex); // Ajustar el tamaño del búfer si se alcanza el final del archivo
+                                        }
+                                    }
+
+                                    // Redimensionar el arreglo de bytes al tamaño real
+                                    Array.Resize(ref fileData, (int)fileSize);
+
+                                    documento.documento.DocDocumento = fileData;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return documento;
         }
     }
 }

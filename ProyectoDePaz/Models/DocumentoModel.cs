@@ -11,7 +11,7 @@ public partial class DocumentoModel
 
     public string DocDescripcion { get; set; } = null!;
 
-    public string? DocLink { get; set; }
+    public string DocLink { get; set; }
 
     public byte[]? DocDocumento { get; set; }
 

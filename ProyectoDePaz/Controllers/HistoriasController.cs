@@ -40,9 +40,11 @@ namespace ProyectoDePaz.Controllers
             return View(documentos);
         }
 
-        public IActionResult VerHistoria()
+        public IActionResult VerHistoria(string id)
         {
-            return View();
+            HistoriasData historias = new HistoriasData(connection);
+            ContenedorModel documento = historias.GetDocumento(id);
+            return View(documento);
         }
 
         [HttpGet]
