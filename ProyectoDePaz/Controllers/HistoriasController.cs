@@ -40,13 +40,6 @@ namespace ProyectoDePaz.Controllers
             return View(documentos);
         }
 
-        public IActionResult VerHistoria(string id)
-        {
-            HistoriasData historias = new HistoriasData(connection);
-            ContenedorModel documento = historias.GetDocumento(id);
-            return View(documento);
-        }
-
         [HttpGet]
         public ActionResult mostrarMunicipios(string depId)
         {
@@ -138,7 +131,7 @@ namespace ProyectoDePaz.Controllers
         {
             HistoriasData historias = new HistoriasData(connection);
             List<ContenedorModel> historiasFiltradas = historias.filtrarHistorias(idEtiquetas, idDep, idTipo);
-            return PartialView("_HistoriasFiltradas", historiasFiltradas); 
+            return PartialView("_HistoriasFiltradas", historiasFiltradas);
         }
     }
 }

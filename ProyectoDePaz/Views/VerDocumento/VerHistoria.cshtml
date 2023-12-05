@@ -1,0 +1,56 @@
+@model ContenedorModel;
+@using System.Security.Claims;
+@{
+    string rol = "";
+    Claim claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+    if (claim != null)
+    {
+        rol = claim.Value + "";
+    }
+    if (rol == "a50e964f-8848-11ee-8027-cecd02c24f20" || rol == "a984b435-8848-11ee-8027-cecd02c24f20")
+    {
+        Layout = "_LayoutUsuario";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+}
+@section ScriptsPersonalizados {
+    <script src="~/js/ScriptVerDocumento.js"></script>
+}
+<div class="container">
+
+    @if (Model.tipodocumento.TipdocId.Equals("cdcb9d72-8b8c-11ee-ac4e-cecd02c24f20"))
+    {
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <iframe width="1024" height="720" src="@Model.documento.DocLink" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.tipodocumento.TipdocId.Equals("cde76276-8b8c-11ee-ac4e-cecd02c24f20"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-none">
+                    <div class="simple-slider">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"
+                                    style="background:url('https://cdn.bootstrapstudio.io/placeholders/1400x800.png') center center / cover no-repeat;">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

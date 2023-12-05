@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using NuGet.Protocol.Plugins;
 using ProyectoDePaz.Models;
 using System.Data.SqlTypes;
 
@@ -7,9 +8,11 @@ namespace ProyectoDePaz.Data
     public class HistoriasData
     {
         private readonly MySqlConnection con;
+        private readonly MySqlConnection connection;
         public HistoriasData(MySqlConnection con)
         {
             this.con = con;
+            connection = new MySqlConnection(con.ConnectionString);
         }
 
         public List<EtiquetaModel> getEtiquetas()
@@ -127,63 +130,60 @@ namespace ProyectoDePaz.Data
             try
             {
 
-                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand("mostrarDepartamentos", connection))
                 {
-                    connection.Open();
-                    using (MySqlCommand command = new MySqlCommand("mostrarDepartamentos", connection))
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.ExecuteNonQuery();
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                ContenedorModel contenedor = new ContenedorModel();
-                                contenedor.departamento.DepId = reader.GetString(0);
-                                contenedor.departamento.DepNombre = reader.GetString(1);
-                                list.Add(contenedor);
-                            }
-                        }
-                    }
-                    using (MySqlConnection connection2 = new MySqlConnection(con.ConnectionString))
-                    {
-                        connection2.Open();
-                        using (MySqlCommand cmd = new MySqlCommand("mostrarTipoDocumentos", connection))
-                        {
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.ExecuteNonQuery();
-                            using (MySqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    ContenedorModel historia = new ContenedorModel();
-                                    historia.tipodocumento.TipdocId = reader.GetString(0);
-                                    historia.tipodocumento.TipdocTipo = reader.GetString(1);
-                                    list.Add(historia);
-                                }
-                            }
-                        }
-                    }
-                    using (MySqlConnection connection3 = new MySqlConnection(con.ConnectionString))
-                    {
-                        connection3.Open();
-                        using (MySqlCommand cmd = new MySqlCommand("mostrarEtiquetas", connection))
-                        {
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.ExecuteNonQuery();
-                            using (MySqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    ContenedorModel historia = new ContenedorModel();
-                                    historia.etiqueta.EtqId = reader.GetString(0);
-                                    historia.etiqueta.EtqTipo = reader.GetString(1);
-                                    list.Add(historia);
-                                }
-                            }
+                            ContenedorModel contenedor = new ContenedorModel();
+                            contenedor.departamento.DepId = reader.GetString(0);
+                            contenedor.departamento.DepNombre = reader.GetString(1);
+                            list.Add(contenedor);
                         }
                     }
                 }
+                connection.Close();
+
+                connection.Open();
+                using (MySqlCommand cmd = new MySqlCommand("mostrarTipoDocumentos", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ContenedorModel historia = new ContenedorModel();
+                            historia.tipodocumento.TipdocId = reader.GetString(0);
+                            historia.tipodocumento.TipdocTipo = reader.GetString(1);
+                            list.Add(historia);
+                        }
+                    }
+                }
+                connection.Close();
+                connection.Open();
+                using (MySqlCommand cmd = new MySqlCommand("mostrarEtiquetas", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ContenedorModel historia = new ContenedorModel();
+                            historia.etiqueta.EtqId = reader.GetString(0);
+                            historia.etiqueta.EtqTipo = reader.GetString(1);
+                            list.Add(historia);
+                        }
+                    }
+                }
+                connection.Close();
+
             }
             catch (System.Exception) { throw; }
             return list;
@@ -261,60 +261,60 @@ namespace ProyectoDePaz.Data
             ContenedorModel documento = new ContenedorModel();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(con.ConnectionString))
+
+                connection.Open();
+                using (MySqlCommand cmd = new MySqlCommand("mostrarDocumento", connection))
                 {
-                    connection.Open();
-                    using (MySqlCommand cmd = new MySqlCommand("mostrarDocumento", connection))
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.ExecuteNonQuery();
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            documento.tipodocumento.TipdocId = reader.GetString(0);
+                            if (!reader.IsDBNull(1))
                             {
-                                documento.tipodocumento.TipdocId = reader.GetString(0);
-                                if (!reader.IsDBNull(1))
-                                {
-                                    documento.documento.DocLink = reader.GetString(1);
-                                }
-                                if (!reader.IsDBNull(2))
-                                {
-                                    long fileSize = reader.GetBytes(2, 0, null, 0, 0); // Obtener el tamaño del archivo
-                                    byte[] fileData = new byte[fileSize]; // Crear un arreglo de bytes del tamaño del archivo
+                                documento.documento.DocLink = reader.GetString(1);
+                            }
+                            if (!reader.IsDBNull(2))
+                            {
+                                long fileSize = reader.GetBytes(2, 0, null, 0, 0); // Obtener el tamaño del archivo
+                                byte[] fileData = new byte[fileSize]; // Crear un arreglo de bytes del tamaño del archivo
 
-                                    long bytesRead = 0;
-                                    int bufferSize = 1024;
-                                    int currentIndex = 0;
+                                long bytesRead = 0;
+                                int bufferSize = 1024;
+                                int currentIndex = 0;
 
-                                    while (bytesRead < fileSize)
+                                while (bytesRead < fileSize)
+                                {
+                                    int curBytes = (int)reader.GetBytes(2, bytesRead, fileData, currentIndex, bufferSize);
+
+                                    // Verificar si hay más datos para leer y ajustar el tamaño del búfer si es necesario
+                                    if (curBytes == 0)
                                     {
-                                        int curBytes = (int)reader.GetBytes(2, bytesRead, fileData, currentIndex, bufferSize);
-
-                                        // Verificar si hay más datos para leer y ajustar el tamaño del búfer si es necesario
-                                        if (curBytes == 0)
-                                        {
-                                            bufferSize *= 2; // Duplicar el tamaño del búfer si no se leyó ningún byte
-                                        }
-
-                                        bytesRead += curBytes;
-                                        currentIndex += curBytes;
-
-                                        if (currentIndex + bufferSize > fileSize)
-                                        {
-                                            bufferSize = (int)(fileSize - currentIndex); // Ajustar el tamaño del búfer si se alcanza el final del archivo
-                                        }
+                                        bufferSize *= 2; // Duplicar el tamaño del búfer si no se leyó ningún byte
                                     }
 
-                                    // Redimensionar el arreglo de bytes al tamaño real
-                                    Array.Resize(ref fileData, (int)fileSize);
+                                    bytesRead += curBytes;
+                                    currentIndex += curBytes;
 
-                                    documento.documento.DocDocumento = fileData;
+                                    if (currentIndex + bufferSize > fileSize)
+                                    {
+                                        bufferSize = (int)(fileSize - currentIndex); // Ajustar el tamaño del búfer si se alcanza el final del archivo
+                                    }
                                 }
+
+                                // Redimensionar el arreglo de bytes al tamaño real
+                                Array.Resize(ref fileData, (int)fileSize);
+
+                                documento.documento.DocDocumento = fileData;
                             }
                         }
                     }
                 }
+                connection.Close();
+
             }
             catch (Exception)
             {
