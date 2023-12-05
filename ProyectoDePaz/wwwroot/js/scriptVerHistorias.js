@@ -76,10 +76,15 @@ $(document).ready(function () {
     $(document).on('click', '.historia', function () {
         var valor = $(this).data('value');
         $.ajax({
-            url: '/VerDocumento/enviarDocumento',
+            url: '/VerDocumento/obtenerHistoria',
             type: 'POST',
-            data: {
-                id: valor
+            data: { id: valor },
+            success: function (response) {
+                if (response === true) {
+                    window.location.href = '/VerDocumento/VerHistoria';
+                } else {
+                    console.error('La respuesta no es verdadera');
+                }
             },
         });
     });

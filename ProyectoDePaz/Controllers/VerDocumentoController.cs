@@ -12,26 +12,14 @@ namespace ProyectoDePaz.Controllers
         {
             this.connection = connection;
         }
-        // public IActionResult VerHistoria(DocumentoModel doc)
-        // {
-        //     DocumentoModel documento = new DocumentoModel();
-        //     documento = doc;
-        //     return View(documento);
-        // }
 
-        public IActionResult VerHistoria()
+        public IActionResult VerHistoria(string id)
         {
-            
-            return View();
+            HistoriasData historias = new HistoriasData(connection);
+            ContenedorModel documento = historias.GetDocumento(id);
+            return View("VerHistoria", documento);
         }
 
-        [HttpPost]
-        public IActionResult enviarDocumento(string id)
-        {
-            // HistoriasData historias = new HistoriasData(connection);
-            // ContenedorModel documento = historias.GetDocumento(id);
-            return RedirectToAction("VerHistoria");
-        }
     }
 
 }

@@ -86,23 +86,29 @@
             if (item.documento.DocId != null)
             {
                 <div class="col">
-                    <div data-value="@item.documento.DocId" class="historia btn card">
-                        <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
-                        <div class="card-body p-4">
-                            <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
-                            <h4 class="card-title">@item.documento.DocTitulo</h4>
-                            <p class="card-text text-start">@item.documento.DocDescripcion</p>
-                            <div class="d-flex">
-                                <div>
-                                    <div class="d-flex">
-                                        <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
-                                        <p class="fw-bold mb-0 ms-2">@item.persona.PerApellidoUno</p>
+                    <form asp-action="VerHistoria" asp-controller="VerDocumento" method="post">
+                        <div class="card">
+                            <img class="img-fluid card-img-top w-100 d-block fit-cover" style="height: 200px;" src="Seishum.jpeg" />
+                            <div class="card-body p-4">
+                                <p class="text-primary card-text mb-0">@item.tipodocumento.TipdocTipo</p>
+                                <h4 class="card-title">@item.documento.DocTitulo</h4>
+                                <p class="card-text text-start">@item.documento.DocDescripcion</p>
+                                <div class="d-flex">
+                                    <div>
+                                        <div class="d-flex">
+                                            <p class="fw-bold mb-0">@item.persona.PerNombreUno</p>
+                                            <p class="fw-bold mb-0 ms-2">@item.persona.PerApellidoUno</p>
+                                        </div>
+                                        <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
                                     </div>
-                                    <p class="text-muted mb-0">@item.publicacion.PubliFechaPublicacion</p>
                                 </div>
                             </div>
+                            <div class="text-center">
+                                <button type="submit" name="id" value="@item.documento.DocId" style="margin-bottom: 10px;" class="historia btn btn-primary">Ver Historia</button>
+                            </div>
                         </div>
-                    </div>
+                        
+                    </form>
                 </div>
             }
         }

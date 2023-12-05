@@ -1,6 +1,10 @@
 ﻿$(document).ready(function () {
     $('.Florencia').on('click', function () {
         var valor = $(this).data('value');
-        console.log(valor);
+        $.ajax({
+            url: "/VerDocumento/VerHistoria",
+            type: "POST",
+            data: { id: valor },
+        });
     });
 });
