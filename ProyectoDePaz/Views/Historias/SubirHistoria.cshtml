@@ -1,21 +1,4 @@
 ﻿@model List<EtiquetaModel>;
-@using System.Security.Claims;
-@{
-    string rol = "";
-    Claim claim = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-    if (claim != null)
-    {
-        rol = claim.Value + "";
-    }
-    if (rol == "a50e964f-8848-11ee-8027-cecd02c24f20" || rol == "a984b435-8848-11ee-8027-cecd02c24f20")
-    {
-        Layout = "_LayoutUsuario";
-    }
-    else
-    {
-        Layout = "_Layout";
-    }
-}
 @section ScriptsPersonalizados {
     <script src="~/js/ScriptHistorias.js"></script>
 }

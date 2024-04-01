@@ -19,19 +19,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Historias" asp-action="Historias">Ver historias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Historias" asp-action="MapaInteractivo">Mapa interactivo</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @await Component.InvokeAsync("MenuDinamico")
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Historias" asp-action="Historias">Ver historias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Historias" asp-action="MapaInteractivo">Mapa interactivo</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
-                <a class="btn btn-dark" style="margin-right: 10px" asp-controller="IngresoUsuario" asp-action="InicioSesion">Inicio sesión</a>
-                <a class="btn btn-primary" asp-controller="IngresoUsuario" asp-action="Registro">Registrarse</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-controller="IngresoUsuario" asp-action="CerrarSesion">Cerrar sesion</a>
+                }
+                else
+                {
+                    <a class="btn btn-dark" style="margin-right: 10px" asp-controller="IngresoUsuario" asp-action="InicioSesion">Inicio sesión</a>
+                    <a class="btn btn-primary" asp-controller="IngresoUsuario" asp-action="Registro">Registrarse</a>
+                }
             </div>
         </nav>
     </header>

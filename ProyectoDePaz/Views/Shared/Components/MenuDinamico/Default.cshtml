@@ -1,0 +1,8 @@
+﻿@model List<VistaModel>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="@item.vis_cotrolador" asp-action="@item.vis_accion">@item.vis_nombre</a>
+    </li>
+}
