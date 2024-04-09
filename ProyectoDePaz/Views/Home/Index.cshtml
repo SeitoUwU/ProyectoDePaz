@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@if (TempData["Success"] != null)
+{
+    <script>
+        toastr.options.positionClass = 'toast-top-right';
+        toastr.success('@TempData["Success"]');
+    </script>
+}
 <div class="container">
     <div style="margin-top: 20px;margin-bottom: 30px;">
         <div class="text-center">

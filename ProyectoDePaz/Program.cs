@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
@@ -19,6 +20,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         o.LoginPath = "/persona/InicioSesion";
         //o.ExpireTimeSpan = TimeSpan.FromSeconds(10);
     });
+
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.HasRippleEffect = true;
+    config.Position = NotyfPosition.TopRight;
+});
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();

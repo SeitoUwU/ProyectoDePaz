@@ -15,57 +15,62 @@
                 <div class="card" style="background: rgba(255, 255, 255, 0.66);color: var(--bs-emphasis-color);backdrop-filter: blur(7px);">
                     <div class="card-body">
                         <div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="text" name="nombreUno" placeholder="Primer nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                            <input type="text" name="apellUno" placeholder="Primer apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                            <input type="tel" name="telefono" placeholder="Numero telefonico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" name="nombreDos" placeholder="Segundo nombre" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                            <input type="text" name="apellDos" placeholder="Segundo apellido" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
+                            <div id="accordion-1" class="accordion" role="tablist">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" role="tab"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="true" aria-controls="accordion-1 .item-1">Datos personales.</button></h2>
+                                    <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">
+                                        <div class="accordion-body">
+                                            <input type="text" name="nombreUno" style="margin-right: 10px;margin-bottom: 10px;" placeholder="Primer nombre" required />
+                                            <input type="text" name="nombreDos" style="margin-right: 10px;margin-bottom: 10px;" placeholder="Segundo nombre " />
+                                            <input type="text" name="apellUno" style="margin-right: 10px;margin-bottom: 10px;" placeholder="Primer apellido" required />
+                                            <input type="text" name="apellDos" style="margin-right: 10px;margin-bottom: 10px;" placeholder="Segundo apellido" />
+                                            <input type="text" name="telefono"  style="margin-right: 10px;margin-bottom: 10px;" placeholder="Numero telefonico" maxlength="10" minlength="10" />
                                             <div>
-                                                <code style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">Ingrese la fecha de nacimiento</code>
-                                                <div>
-                                                    <input name="fechaNacimiento" type="date" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                                </div>
+                                                <p style="margin-bottom: 0px;">Ingrese fecha de nacimiento</p>
+                                                <input type="date" name="fechaNacimiento" required />
+                                            </div>
+                                            <div class="text-end"><button class="btn btn-success" type="button">Siguiente</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-2" aria-expanded="false" aria-controls="accordion-1 .item-2">Datos institucionales.</button></h2>
+                                    <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-1">
+                                        <div class="accordion-body">
+                                            <select asp-items="ViewBag.roles" name="rol" style="margin-right: 10px;margin-bottom: 10px;" required>
+                                                <option class="d-none" selected>Seleccione tipo persona</option>
+                                            </select>
+                                            <select asp-items="ViewBag.generos" name="genero" style="margin-right:10px;margin-bottom:10px" required>
+                                                <option class="d-none" selected>Seleccione genero</option>
+                                            </select>
+                                            <select id="dep" asp-items="ViewBag.departamento" style="margin-right: 10px;margin-bottom: 10px;" required>
+                                                <option class="d-none" selected>Seleccione el departamento</option>
+                                            </select>
+                                            <select id="municipio" style="margin-right:10px;margin-bottom:10px;" required>
+                                                <option class="d-none" selected>Seleccione el municipio</option>
+                                            </select>
+                                            <select id="institucion" name="institucion" style="margin-right:10px;margin-bottom:10px;" required>
+                                                <option class="d-none" selected>Seleccione institucion</option>
+                                            </select>
+                                            <div class="text-end"><button class="btn btn-success" type="button">Siguiente</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-3" aria-expanded="false" aria-controls="accordion-1 .item-3">Datos privados.</button></h2>
+                                    <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-1">
+                                        <div class="accordion-body">
+                                            <input name="correo" type="email" placeholder="Ingrese el correo" style="margin-right: 10px;margin-bottom: 10px;" required />
+                                            <input name="contrasenia" type="password" placeholder="Ingrese su contraseña" style="margin-right: 10px;margin-bottom: 10px;" required />
+                                            <input name="contrasenia2" type="password" placeholder="Confirme su contraseña" style="margin-right: 10px;margin-bottom: 10px;" required />
+                                            <div class="text-end">
+                                                <button asp-action="RegistroPersona" class="btn btn-primary" type="submit" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
+                                                    Registrar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <select asp-items="ViewBag.roles" name="rol" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione tipo persona</option>
-                                            </select>
-                                            <select asp-items="ViewBag.generos" name="genero" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;box-shadow: 0px 0px 0px var(--bs-body-color);">
-                                                <option class="d-none" selected>Seleccione genero</option>
-                                            </select>
-                                            <select id="institucion" name="institucion" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione institucion</option>
-                                            </select>
-
-                                        </div>
-                                        <div class="col">
-                                            <select id="dep" asp-items="ViewBag.departamento" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione el departamento</option>
-                                            </select>
-                                            <select id="municipio" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;">
-                                                <option class="d-none" selected>Seleccione el municipio</option>
-                                            </select>
-                                            <input name="correo" type="email" placeholder="Correo electronico" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                            <input name="contrasenia" type="password" placeholder="Contrasenia" style="margin-top: 10px;margin-right: 10px;margin-bottom: 10px;margin-left: 10px;" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center" style="margin-top: 10px;">
-                                <button asp-action="RegistroPersona" class="btn btn-primary" type="submit" style="box-shadow: 0px 0px 11px 1px var(--bs-btn-active-border-color);">
-                                    Registrar
-                                </button>
                             </div>
                         </div>
                     </div>

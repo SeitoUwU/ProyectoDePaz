@@ -7,15 +7,18 @@ using ProyectoDePaz.Models;
 using System;
 using System.Security.Claims;
 using ProyectoDePaz.Data;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ProyectoDePaz.Controllers
 {
     public class IngresoUsuarioController : Controller
     {
         private readonly MySqlConnection connection;
-        public IngresoUsuarioController(MySqlConnection connection)
+        private readonly INotyfService _notyService;
+        public IngresoUsuarioController(MySqlConnection connection, INotyfService notyService)
         {
             this.connection = connection;
+            _notyService = notyService;
         }
         public IActionResult InicioSesion()
         {
@@ -63,6 +66,7 @@ namespace ProyectoDePaz.Controllers
         public async Task<ActionResult> IniciarSesion(UsuarioModel usuario)
         {
             IngresoUsuarioData ingreso = new IngresoUsuarioData(connection);
+
             UsuarioModel usu = ingreso.inicioSesion(usuario);
             if (usu.FkrolId != null)
             {
@@ -81,12 +85,15 @@ namespace ProyectoDePaz.Controllers
                     ExpiresUtc = DateTimeOffset.MaxValue
                 };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), authProperties);
-                if (usu.FkrolId == "a50e964f-8848-11ee-8027-cecd02c24f20" || usu.FkrolId == "a984b435-8848-11ee-8027-cecd02c24f20")
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                _notyService.Success("Bienvenido " + usu.UsuCorreo);
+                return RedirectToAction("Index", "Home");
+
             }
-            return RedirectToAction("InicioSesion", "IngresoUsuario");
+            else
+            {
+                TempData["Error"] = "Correo o contraseña incorrectos";
+                return RedirectToAction("InicioSesion", "IngresoUsuario");
+            }
         }
 
         [HttpPost]
